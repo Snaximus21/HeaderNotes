@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name" translatable="false">HeaderNotes</string>
+    <string name="sign_out_button">Выйти из профиля</string>
+    <string name="create_button">Создать</string>
+    <string name="update_button">Обновить</string>
+    <string name="delete_employer_button">Удалить профиль сотрудника</string>
+    <string name="delete_user_button">Удалить все данные профиля</string>
+    <string name="back_button">Назад</string>
+    <string name="to_main_fragment_button">На главную страницу</string>
+    <string name="signed_out_toast">Вы вышли из профиля</string>
+    <string name="my_employers">Мои сотрудники</string>
+    <string name="settings">Настройки</string>
+    <string name="theme_header">Тема</string>
+    <string name="language_header">Язык</string>
+    <string name="language_warning">При смене языка приложение автоматически будет перезагружено</string>
+    <string name="default_settings">По умолчанию</string>
+    <string name="deleted">Удалено</string>
+    <string name="updated">Обновлено</string>
+    <string name="created">Создано</string>
+    <string name="saved">Сохранено</string>
+    <string name="added">Добавлено</string>
+    <string name="choose_employer">Выберите сотрудника:</string>
+    <string name="cancel">Отмена</string>
+    <string name="add_employer">Добавить сотрудника</string>
+    <string name="name_employer">Имя</string>
+    <string name="species">Должность</string>
+    <string name="sex">Пол</string>
+    <string name="birthday">День рождения</string>
+    <string name="error">Ошибка</string>
+    <string name="not_elem">тут пока нет элементов</string>
+    <string name="delete_note">Вы действительно хотите удалить запись?</string>
+    <string name="delete_profile">Вы действительно хотите удалить профиль?</string>
+    <string name="delete_profile_msg">Отменить действие будет невозможно!</string>
+    <string name="delete_yes">Удалить</string>
+    <string name="add">добавить</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
+    <string name="menu_notes">Заметки</string>
+    <string name="menu_tasks">Задачи</string>
+    <string name="menu_employers">Сотрудники</string>
+
+    <string name="title_employers">ФИО Сотрудника</string>
+    <string name="title_job">Должность</string>
+    <string name="title_age">Возраст</string>
+    <string name="title_tasks">Задачи</string>
+    <string name="title_notes">Заметки</string>
+
+    <string name="finish">ЗАВЕРШИТЬ</string>
+    <string name="skip">ПРОПУСТИТЬ</string>
+    <string name="next">ДАЛЕЕ</string>
+    <string name="hello">Добро пожаловать в приложение HeaderNotes!</string>
+    <string name="hello2">Данное приложение позволит вам аккумулировать своим временем и держать списки ваших задач и ваших сотрудников под рукой.</string>
+    <string name="google_signin">Важно: вход в приложение осуществляется только через Google аккаунт</string>
+    <string name="google_signin_repeat">Это необходимо для того, чтобы Ваши данные не потерялись. А также, чтобы у Вас был доступ к ним с нескольких устройств сразу.</string>
+</resources>

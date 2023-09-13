@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="toolbar_item">#203944</color>
+    <color name="text_item">#7FBC2B</color>
+    <color name="background_card">#B5E6C4</color>
+    <color name="toolbar_bug">#f1e0cf</color>
+    <color name="inside_settings">#FFFDFC</color>
+    <color name="stroke_settings">#D8A163</color>
+    <color name="fab">#7D8FFC</color>
+</resources>

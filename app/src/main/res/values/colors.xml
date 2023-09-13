@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="background_card">#4B9061</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primaryVariant">#7D8FFC</color>
+    <color name="darkBeige">#bc9776</color>
+    <color name="inside_settings">#bc9776</color>
+    <color name="secondaryPrimary">#00FF0B</color>
+    <color name="lightBeige">#f1e0cf</color>
+    <color name="superLightBeige">#F8F4F0</color>
+    <color name="secondaryLightBeige">#ddc4a8</color>
+    <color name="darkBrown">#462908</color>
+    <color name="toolbar_bug">#462908</color>
+    <color name="stroke_settings">#462908</color>
+    <color name="lightGreen">#D8F8AD</color>
+    <color name="toolbar_item">#27A0D8</color>
+    <color name="green">#769F3D</color>
+    <color name="darkGreen">#558F04</color>
+    <color name="superDarkGreen">#3C6503</color>
+    <color name="text_item">#558F04</color>
+    <color name="fab">#F0BA16</color>
+
+</resources>

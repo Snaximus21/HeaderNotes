@@ -1,0 +1,37 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.HeaderNotes" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
+        <item name="colorPrimaryVariant">@color/primaryVariant</item>
+        <item name="colorPrimary">@color/superDarkGreen</item>
+        <item name="colorPrimaryDark">@color/lightGreen</item>
+        <item name="colorPrimaryContainer">@color/lightGreen</item>
+        <item name="colorOnPrimary">@color/darkBeige</item>
+        <item name="colorSecondary">@color/lightGreen</item>
+        <item name="colorSecondaryVariant">@color/secondaryPrimary</item>
+        <item name="colorOnSecondary">@color/lightBeige</item>
+        <item name="android:statusBarColor">@color/green</item>
+        <item name="fontFamily">monospace</item>
+        <item name="buttonStyle">@style/MyButton</item>
+        <item name="android:buttonStyle">@style/MyButton</item>
+        <item name="android:textColorPrimary">@color/lightGreen</item>
+        <item name="android:textColor">@color/superLightBeige</item>
+        <item name="android:editTextColor">@color/superLightBeige</item>
+        <item name="floatingActionButtonStyle">@style/MyFloatActionButton</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:alertDialogTheme">@style/MyAlertDialog</item>
+        <item name="android:datePickerDialogTheme">@style/MyDatePickerDialog</item>
+        <item name="android:windowBackground">@drawable/background_night</item>
+    </style>
+
+    <style name="Theme.HeaderNotes" parent="Base.Theme.HeaderNotes" >
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+    <style name="Theme.HeaderNotes.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.HeaderNotes.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+</resources>
