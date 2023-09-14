@@ -14,11 +14,6 @@
     <string name="language_header">Язык</string>
     <string name="language_warning">При смене языка приложение автоматически будет перезагружено</string>
     <string name="default_settings">По умолчанию</string>
-    <string name="deleted">Удалено</string>
-    <string name="updated">Обновлено</string>
-    <string name="created">Создано</string>
-    <string name="saved">Сохранено</string>
-    <string name="added">Добавлено</string>
     <string name="choose_employer">Выберите сотрудника:</string>
     <string name="cancel">Отмена</string>
     <string name="add_employer">Добавить сотрудника</string>
@@ -26,7 +21,6 @@
     <string name="species">Должность</string>
     <string name="sex">Пол</string>
     <string name="birthday">День рождения</string>
-    <string name="error">Ошибка</string>
     <string name="not_elem">тут пока нет элементов</string>
     <string name="delete_note">Вы действительно хотите удалить запись?</string>
     <string name="delete_profile">Вы действительно хотите удалить профиль?</string>
@@ -35,16 +29,26 @@
     <string name="add">добавить</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="error_text_field">Это поле не может быть пустым</string>
 
     <string name="menu_notes">Заметки</string>
     <string name="menu_tasks">Задачи</string>
     <string name="menu_employers">Сотрудники</string>
+
+    <string name="subdivision">Подразделение</string>
 
     <string name="title_employers">ФИО Сотрудника</string>
     <string name="title_job">Должность</string>
     <string name="title_age">Возраст</string>
     <string name="title_tasks">Задачи</string>
     <string name="title_notes">Заметки</string>
+    <string name="error">Ошибка</string>
+
+    <string name="deleted">Удалено</string>
+    <string name="updated">Обновлено</string>
+    <string name="created">Создано</string>
+    <string name="saved">Сохранено</string>
+    <string name="added">Добавлено</string>
 
     <string name="finish">ЗАВЕРШИТЬ</string>
     <string name="skip">ПРОПУСТИТЬ</string>
@@ -53,4 +57,7 @@
     <string name="hello2">Данное приложение позволит вам аккумулировать своим временем и держать списки ваших задач и ваших сотрудников под рукой.</string>
     <string name="google_signin">Важно: вход в приложение осуществляется только через Google аккаунт</string>
     <string name="google_signin_repeat">Это необходимо для того, чтобы Ваши данные не потерялись. А также, чтобы у Вас был доступ к ним с нескольких устройств сразу.</string>
+
+
+    <string name="add_user">Добро пожаловать в приложение. Пожалуйста, введите ваши учётные данные.</string>
 </resources>

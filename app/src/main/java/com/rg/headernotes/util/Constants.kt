@@ -3,14 +3,29 @@ package com.rg.headernotes.util
 import com.rg.headernotes.R
 
 
-object GraphActions{
+object GraphActions {
     val startToAuth: Int = R.id.actionStartFragmentToAuthFragment
     val startToVpStart: Int = R.id.actionStartFragmentToViewPagerStartFragment
+    val authToAddUser: Int = R.id.actionAuthFragmentToAddUserFragment
     val authToMain: Int = R.id.actionAuthFragmentToMainFragment
+    val addUserToMain: Int = R.id.actionAddUserFragmentToMainFragment
     val vpStartToVpAuth: Int = R.id.actionViewPagerStartFragmentToAuthFragment
 }
 
-object Identifiers{
+object Identifiers {
     val navHostFragment = R.id.navHostFragment
     val viewPagerStart = R.id.viewPagerStart
+}
+
+object FireStoreTables {
+    const val USER = "users"
+    const val EMPLOYERS = "employers"
+}
+
+object Strings {
+    val CREATED = "${R.string.created}"
+    val DELETED = "${R.string.deleted}"
+    val ADDED = "${R.string.added}"
+    val UPDATED = "${R.string.updated}"
+    val ERROR = "${R.string.error}"
 }
