@@ -44,9 +44,9 @@ class AuthFragment : Fragment() {
     ) { result ->
         showMessage(
             if (result.resultCode != Activity.RESULT_OK)
-                "Авторизация прошла успешно."
-            else
                 "Ошибка при выполнении авторизации."
+            else
+                "Авторизация прошла успешно."
         )
     }
 
@@ -58,29 +58,24 @@ class AuthFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
         authStateListener = AuthStateListener { firebaseAuth ->
             firebaseAuth.currentUser?.let {
+                viewModel.getUser()
+                viewModel.user.observe(viewLifecycleOwner) {
+                    when (it) {
+                        is UiState.Loading -> {
+                            showMessage("Загрузка профиля...")
+                        }
 
-                signInIntent?.let {
-                    Navigation.findNavController(requireActivity(), R.id.navHostFragment)
-                        .navigate(GraphActions.authToAddUser)
-                } ?: run {
-                    viewModel.getUser()
-                    viewModel.user.observe(viewLifecycleOwner) {
-                        when (it) {
-                            is UiState.Loading -> {
-                                showMessage("Загрузка профиля...")
+                        is UiState.Success -> {
+                            if (it.data.name.trim().replace("null", "").isEmpty() or it.data.name.trim().replace("null", "").isEmpty()) {
+                                navigate(GraphActions.authToAddUser)
+                            } else {
+                                navigate(GraphActions.authToMain)
+                                showMessage("Приветствую ${it.data.name}")
                             }
+                        }
 
-                            is UiState.Success -> {
-                                if (it.data.name.trim().replace("null", "").isEmpty() or it.data.name.trim().replace("null", "").isEmpty()) {
-                                    navigate(GraphActions.authToAddUser)
-                                } else {
-                                    navigate(GraphActions.authToMain)
-                                }
-                            }
-
-                            is UiState.Failure -> {
-                                showMessage("Ошибка при загрузке данных пользователя.")
-                            }
+                        is UiState.Failure -> {
+                            showMessage("Ошибка при загрузке данных пользователя.")
                         }
                     }
                 }
