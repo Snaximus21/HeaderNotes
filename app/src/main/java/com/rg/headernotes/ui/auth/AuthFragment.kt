@@ -23,6 +23,7 @@ import com.rg.headernotes.ui.employers.EmployerModel
 import com.rg.headernotes.util.GraphActions
 import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState
+import com.rg.headernotes.util.navigate
 import com.rg.headernotes.util.showMessage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -66,22 +67,14 @@ class AuthFragment : Fragment() {
                     viewModel.user.observe(viewLifecycleOwner) {
                         when (it) {
                             is UiState.Loading -> {
-                                showMessage("Загрузка...")
+                                showMessage("Загрузка профиля...")
                             }
 
                             is UiState.Success -> {
-                                if (it.data.name.trim().replace("null", "").isNullOrEmpty() or it.data.name.trim().replace("null", "").isNullOrEmpty()) {
-                                    Navigation.findNavController(
-                                        requireActivity(),
-                                        R.id.navHostFragment
-                                    )
-                                        .navigate(GraphActions.authToAddUser)
+                                if (it.data.name.trim().replace("null", "").isEmpty() or it.data.name.trim().replace("null", "").isEmpty()) {
+                                    navigate(GraphActions.authToAddUser)
                                 } else {
-                                    Navigation.findNavController(
-                                        requireActivity(),
-                                        R.id.navHostFragment
-                                    )
-                                        .navigate(GraphActions.authToMain)
+                                    navigate(GraphActions.authToMain)
                                 }
                             }
 

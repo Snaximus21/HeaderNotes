@@ -11,6 +11,7 @@ import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentStartSecondBinding
 import com.rg.headernotes.util.GraphActions
 import com.rg.headernotes.util.Identifiers
+import com.rg.headernotes.util.navigate
 
 class SecondStartFragment : Fragment() {
 
@@ -27,9 +28,7 @@ class SecondStartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.finishTV.setOnClickListener {
-            Navigation
-                .findNavController(requireActivity(),  Identifiers.navHostFragment)
-                .navigate(GraphActions.vpStartToVpAuth)
+            navigate(GraphActions.vpStartToVpAuth)
             viewPagerStartFinish()
         }
     }

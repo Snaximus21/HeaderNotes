@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAddUserBinding
 import com.rg.headernotes.util.GraphActions
 import com.rg.headernotes.util.UiState
-import com.rg.headernotes.util.showMessage
+import com.rg.headernotes.util.navigate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,8 +51,7 @@ class AddUserFragment : Fragment() {
         }
         viewModel.addNewUser.observe(viewLifecycleOwner){
             if(it is UiState.Success){
-                Navigation.findNavController(requireActivity(), R.id.navHostFragment)
-                    .navigate(GraphActions.addUserToMain)
+                navigate(GraphActions.addUserToMain)
             }
         }
     }

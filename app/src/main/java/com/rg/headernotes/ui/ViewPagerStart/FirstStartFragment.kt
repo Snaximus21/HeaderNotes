@@ -13,6 +13,7 @@ import com.rg.headernotes.databinding.FragmentStartFirstBinding
 import com.rg.headernotes.databinding.FragmentVpStartBinding
 import com.rg.headernotes.util.GraphActions
 import com.rg.headernotes.util.Identifiers
+import com.rg.headernotes.util.navigate
 
 class FirstStartFragment : Fragment() {
 
@@ -33,8 +34,7 @@ class FirstStartFragment : Fragment() {
         }
 
         binding.skipTV.setOnClickListener {
-            Navigation.findNavController(requireActivity(), Identifiers.navHostFragment)
-                .navigate(GraphActions.vpStartToVpAuth)
+            navigate(GraphActions.vpStartToVpAuth)
             viewPager2StartFinish()
         }
 
