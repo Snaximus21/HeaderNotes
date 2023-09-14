@@ -9,14 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAddUserBinding
-import com.rg.headernotes.databinding.FragmentAuthBinding
 import com.rg.headernotes.util.GraphActions
-import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState
+import com.rg.headernotes.util.showMessage
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddUserFragment : Fragment() {

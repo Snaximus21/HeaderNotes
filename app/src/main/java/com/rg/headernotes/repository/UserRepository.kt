@@ -49,8 +49,30 @@ class UserRepository @Inject constructor(private val dataBase: FirebaseFirestore
                 .document(user.uid)
                 .delete()
                 .addOnSuccessListener {
-                    result.invoke(UiState.Failure(Strings.DELETED))
+                    result.invoke(UiState.Success(Strings.DELETED))
                 }.addOnFailureListener {
+                    result.invoke(UiState.Failure(Strings.ERROR))
+                }
+        }
+    }
+
+    override fun getUser(result: (UiState<UserModel>) -> Unit) {
+        FirebaseAuth.getInstance().currentUser?.let { user ->
+            dataBase
+                .collection(FireStoreTables.USER)
+                .document(user.uid)
+                .get()
+                .addOnSuccessListener {
+                    result.invoke(
+                        UiState.Success(
+                            UserModel(
+                                name = it.get("name").toString(),
+                                subDivision = it.get("subDivision").toString()
+                            )
+                        )
+                    )
+                }
+                .addOnFailureListener {
                     result.invoke(UiState.Failure(Strings.ERROR))
                 }
         }
