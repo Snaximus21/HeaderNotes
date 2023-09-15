@@ -120,8 +120,8 @@ class EmployersFragment : Fragment() {
                 result.getParcelable("employerModel", EmployerModel::class.java)?.let {
                     viewModel.newEmployer(it)
                 }
-                binding.coordinatorLayout.visibility = View.VISIBLE
             }
+            binding.coordinatorLayout.visibility = View.VISIBLE
         }
 
         ItemTouchHelper(object : ItemTouchHelper.Callback() {

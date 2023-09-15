@@ -20,6 +20,7 @@ object Identifiers {
 object FireStoreTables {
     const val USER = "users"
     const val EMPLOYERS = "employers"
+    const val NOTES = "notes"
 }
 
 object Strings {

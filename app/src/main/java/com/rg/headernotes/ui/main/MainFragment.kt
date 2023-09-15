@@ -12,6 +12,7 @@ import com.rg.headernotes.databinding.FragmentMainBinding
 import com.rg.headernotes.databinding.HeaderNavigationBinding
 import com.rg.headernotes.ui.auth.AuthViewModel
 import com.rg.headernotes.ui.employers.EmployersFragment
+import com.rg.headernotes.ui.notes.NotesFragment
 import com.rg.headernotes.util.MenuItems
 import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState
@@ -23,7 +24,8 @@ class MainFragment : Fragment() {
     private val binding by lazy { FragmentMainBinding.inflate(layoutInflater) }
     private val viewModelAuth by viewModels<AuthViewModel>()
     private val fragmentList = arrayListOf<Fragment>(
-        EmployersFragment()
+        EmployersFragment(),
+        NotesFragment()
     )
 
     override fun onCreateView(

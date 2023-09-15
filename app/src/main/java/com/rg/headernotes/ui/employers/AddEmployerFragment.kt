@@ -5,21 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAddEmployerBinding
-import com.rg.headernotes.util.UiState
-import com.rg.headernotes.util.navigate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddEmployerFragment : Fragment() {
     private lateinit var binding: FragmentAddEmployerBinding
-    private val viewModel by viewModels<EmployersViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +27,14 @@ class AddEmployerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.buttonBack.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                parentFragmentManager.setFragmentResult("newEmployer", Bundle())
+                parentFragmentManager.popBackStack()
+            }
+        }
+
         binding.buttonApply.setOnClickListener {
             when{
                 binding.editTextEmployerName.text.toString().trim().isEmpty() -> {
@@ -56,7 +59,6 @@ class AddEmployerFragment : Fragment() {
                         parentFragmentManager.setFragmentResult("newEmployer", Bundle().apply {
                             putParcelable("employerModel", employer)
                         })
-                        delay(500)
                         parentFragmentManager.popBackStack()
                     }
                 }

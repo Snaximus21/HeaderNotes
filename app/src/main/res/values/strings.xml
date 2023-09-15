@@ -59,6 +59,9 @@
     <string name="google_signin">Важно: вход в приложение осуществляется только через Google аккаунт</string>
     <string name="google_signin_repeat">Это необходимо для того, чтобы Ваши данные не потерялись. А также, чтобы у Вас был доступ к ним с нескольких устройств сразу.</string>
 
+    <string name="note_title">Заметка</string>
+    <string name="note_subtitle">Текст заметки</string>
+    <string name="note_date">Дата заметки</string>
 
     <string name="add_user">Добро пожаловать в приложение. Пожалуйста, введите ваши учётные данные.</string>
     <string name="add_new_employer">Пожалуйста введите учётные данные сотрудника.</string>
