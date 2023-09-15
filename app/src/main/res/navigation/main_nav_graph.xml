@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@+id/navEmployers">
+
+    <fragment
+        android:id="@+id/navEmployers"
+        android:name="com.rg.headernotes.ui.employers.EmployersFragment"
+        android:label="Сотрудники"
+        tools:layout="@layout/fragment_employers">
+    </fragment>
+
+    <fragment
+        android:id="@+id/navNotes"
+        android:name="com.rg.headernotes.ui.notes.NotesFragment"
+        android:label="Заметки"
+        tools:layout="@layout/fragment_notes">
+    </fragment>
+
+</navigation>

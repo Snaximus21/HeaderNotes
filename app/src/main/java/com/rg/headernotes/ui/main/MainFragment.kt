@@ -7,7 +7,12 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.rg.headernotes.MainActivity
+import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentMainBinding
 import com.rg.headernotes.databinding.HeaderNavigationBinding
 import com.rg.headernotes.ui.auth.AuthViewModel
@@ -23,10 +28,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainFragment : Fragment() {
     private val binding by lazy { FragmentMainBinding.inflate(layoutInflater) }
     private val viewModelAuth by viewModels<AuthViewModel>()
-    private val fragmentList = arrayListOf<Fragment>(
-        EmployersFragment(),
-        NotesFragment()
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,11 +58,9 @@ class MainFragment : Fragment() {
             }
         )
 
-        binding.viewPager.adapter = ViewPagerMainAdapter(
-            fragmentList,
-            childFragmentManager,
-            lifecycle
-        )
+        //Аттачим граф навигации к панели навигации
+        val navHost = childFragmentManager.findFragmentById(R.id.navHostFragmentContentMain) as NavHostFragment
+        binding.navigationView.setupWithNavController(navHost.navController)
 
         //Аттачим хидер к панели навигации
         val headerBinding = HeaderNavigationBinding.inflate(layoutInflater)
@@ -86,24 +85,7 @@ class MainFragment : Fragment() {
                 }
             }
         }
-        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
-            when(menuItem.itemId){
-                MenuItems.TASKS -> {
 
-                }
-                MenuItems.EMPLOYERS -> {
-
-                }
-                MenuItems.NOTES -> {
-
-                }
-                MenuItems.SETTINGS -> {
-
-                }
-            }
-            binding.drawerLayout.close()
-            true
-        }
         headerBinding.buttonSettings.setOnClickListener {
             showMessage("UserClicked")
             binding.drawerLayout.close()
