@@ -1,10 +1,43 @@
 package com.rg.headernotes.ui.employers
 
+import android.os.Parcel
+import android.os.Parcelable
+
 data class EmployerModel(
-    val id: Int = 0,
     val fullName: String = "",
     val job: String = "",
-    val age: Int = 0,
-    val notesCount: Int = 0,
-    val tasksCount: Int = 0
-)
+    val age: String = "",
+    val notesCount: String = "",
+    val tasksCount: String = ""
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(fullName)
+        parcel.writeString(job)
+        parcel.writeString(age)
+        parcel.writeString(notesCount)
+        parcel.writeString(tasksCount)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<EmployerModel> {
+        override fun createFromParcel(parcel: Parcel): EmployerModel {
+            return EmployerModel(parcel)
+        }
+
+        override fun newArray(size: Int): Array<EmployerModel?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

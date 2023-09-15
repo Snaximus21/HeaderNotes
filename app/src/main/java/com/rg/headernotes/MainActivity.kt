@@ -3,6 +3,7 @@ package com.rg.headernotes
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
@@ -30,9 +31,9 @@ class MainActivity : AppCompatActivity() {
         }
         setContentView(binding.root)
 
-        window.setFlags(
+        /*window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
+        )*/
     }
 }

@@ -12,7 +12,6 @@ import javax.inject.Inject
 class EmployersRepository @Inject constructor(private val database: FirebaseFirestore) :
     EmployersDao {
     override fun getAllEmployers(
-        employerName: String,
         result: (UiState<List<EmployerModel>>) -> Unit
     ) {
         val employers = mutableListOf<EmployerModel>()
@@ -21,7 +20,22 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employerName)
+                .get()
+                .addOnSuccessListener {
+                    for (document in it) {
+                        employers  += EmployerModel(
+                            document.data["fullName"].toString(),
+                            document.data["job"].toString(),
+                            document.data["age"].toString(),
+                            document.data["notesCount"].toString(),
+                            document.data["tasksCount"].toString(),
+                        )
+                    }
+                    result.invoke(UiState.Success(employers))
+                }
+                .addOnFailureListener {
+                    result.invoke(UiState.Failure(Strings.ERROR))
+                }
         }
     }
 
@@ -46,10 +60,10 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
         }
     }
 
-    override suspend fun addEmployer(
+    override fun addEmployer(
         employer: EmployerModel,
         employerName: String,
-        result: (UiState<String>) -> Unit
+        result: (UiState<EmployerModel>) -> Unit
     ) {
         FirebaseAuth.getInstance().currentUser?.let { user ->
             database
@@ -59,7 +73,7 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .document(employerName)
                 .set(employer)
                 .addOnSuccessListener {
-                    result.invoke(UiState.Success(Strings.ADDED))
+                    result.invoke(UiState.Success(employer))
                 }
                 .addOnFailureListener {
                     result.invoke(UiState.Failure(Strings.ERROR))
@@ -67,7 +81,7 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
         }
     }
 
-    override suspend fun updateEmployer(
+    override fun updateEmployer(
         employer: EmployerModel,
         employerName: String,
         result: (UiState<String>) -> Unit
@@ -78,8 +92,7 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
     }
 
     //TODO Нужно удалять данные из коллекции
-    override suspend fun deleteEmployer(
-        employerID: String,
+    override fun deleteEmployer(
         employerName: String,
         result: (UiState<String>) -> Unit
     ) {

@@ -9,6 +9,11 @@ import com.rg.headernotes.databinding.ItemEmployerBinding
 class EmployerAdapter() : Adapter<EmployerViewHolder>() {
     private var employersList = emptyList<EmployerModel>()
 
+    fun getEmployer(pos: Int) : EmployerModel{
+        if(pos > employersList.size) return EmployerModel()
+        return employersList[pos]
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     fun setEmployers(employers: List<EmployerModel>){
         employersList = employers

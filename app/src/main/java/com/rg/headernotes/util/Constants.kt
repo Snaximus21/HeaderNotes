@@ -29,3 +29,10 @@ object Strings {
     val UPDATED = "${R.string.updated}"
     val ERROR = "${R.string.error}"
 }
+
+object MenuItems{
+    val NOTES = R.id.navNotes
+    val TASKS = R.id.navTasks
+    val EMPLOYERS = R.id.navEmployers
+    val SETTINGS = R.id.navSettings
+}

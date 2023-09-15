@@ -17,3 +17,7 @@ fun Fragment.navigate(route: Int){
         R.id.navHostFragment
     ).navigate(route)
 }
+
+fun String.isElementNull() : Boolean{
+    return this.trim().replace("null", "").isEmpty()
+}

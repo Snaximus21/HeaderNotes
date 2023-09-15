@@ -31,6 +31,7 @@
     <string name="no">Нет</string>
     <string name="error_text_field">Это поле не может быть пустым</string>
 
+    <string name="menu">Меню</string>
     <string name="menu_notes">Заметки</string>
     <string name="menu_tasks">Задачи</string>
     <string name="menu_employers">Сотрудники</string>
@@ -60,4 +61,5 @@
 
 
     <string name="add_user">Добро пожаловать в приложение. Пожалуйста, введите ваши учётные данные.</string>
+    <string name="add_new_employer">Пожалуйста введите учётные данные сотрудника.</string>
 </resources>

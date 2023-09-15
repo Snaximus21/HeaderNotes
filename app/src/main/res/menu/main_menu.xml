@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
     <group
@@ -8,10 +7,12 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/navNotes"
+            android:checkable="true"
             android:icon="@drawable/icon_notes"
             android:title="@string/menu_notes" />
         <item
             android:id="@+id/navTasks"
+            android:checkable="true"
             android:icon="@drawable/icon_tasks"
             android:title="@string/menu_tasks" />
     </group>
@@ -20,9 +21,10 @@
         android:id="@+id/navEmployersGroup"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_settings"
+            android:id="@+id/navEmployers"
+            android:checkable="true"
             android:icon="@drawable/icon_employer"
-            android:title="@string/menu_employers"/>
+            android:title="@string/menu_employers" />
     </group>
 
     <group
@@ -30,7 +32,8 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/navSettings"
+            android:checkable="true"
             android:icon="@drawable/icon_settings"
-            android:title="@string/settings"/>
+            android:title="@string/settings" />
     </group>
 </menu>
