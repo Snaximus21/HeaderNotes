@@ -29,6 +29,10 @@ object Strings {
     val ADDED = "${R.string.added}"
     val UPDATED = "${R.string.updated}"
     val ERROR = "${R.string.error}"
+
+    val THEME_DAY = "${R.string.theme_day}"
+    val THEME_NIGHT = "${R.string.theme_night}"
+    val THEME_SYSTEM = "${R.string.theme_system}"
 }
 
 object MenuItems{

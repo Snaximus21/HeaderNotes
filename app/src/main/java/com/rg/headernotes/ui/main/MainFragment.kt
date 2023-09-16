@@ -7,22 +7,15 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.rg.headernotes.MainActivity
 import com.rg.headernotes.R
-import com.rg.headernotes.databinding.FragmentAddUserBinding
 import com.rg.headernotes.databinding.FragmentMainBinding
 import com.rg.headernotes.databinding.HeaderNavigationBinding
 import com.rg.headernotes.ui.auth.AuthViewModel
-import com.rg.headernotes.ui.employers.EmployersFragment
-import com.rg.headernotes.ui.notes.NotesFragment
-import com.rg.headernotes.util.MenuItems
 import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState
-import com.rg.headernotes.util.showMessage
+import com.rg.headernotes.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,7 +45,7 @@ class MainFragment : Fragment() {
                             }
                             else -> {
                                 isEnabled = false
-                                showMessage("Нажмите еще раз для выхода")
+                                showSnackbar("Нажмите еще раз для выхода")
                             }
                         }
                     }

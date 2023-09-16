@@ -10,7 +10,6 @@
     <string name="signed_out_toast">Вы вышли из профиля</string>
     <string name="my_employers">Мои сотрудники</string>
     <string name="settings">Настройки</string>
-    <string name="theme_header">Тема</string>
     <string name="language_header">Язык</string>
     <string name="language_warning">При смене языка приложение автоматически будет перезагружено</string>
     <string name="default_settings">По умолчанию</string>
@@ -31,6 +30,7 @@
     <string name="no">Нет</string>
     <string name="error_text_field">Это поле не может быть пустым</string>
 
+    <string name="theme_header">Тема приложения</string>
     <string name="menu">Меню</string>
     <string name="menu_notes">Заметки</string>
     <string name="menu_tasks">Задачи</string>
@@ -65,4 +65,8 @@
 
     <string name="add_user">Добро пожаловать в приложение. Пожалуйста, введите ваши учётные данные.</string>
     <string name="add_new_employer">Пожалуйста введите учётные данные сотрудника.</string>
+
+    <string name="theme_night">Тёмная</string>
+    <string name="theme_day">Светлая</string>
+    <string name="theme_system">Системная</string>
 </resources>

@@ -18,10 +18,12 @@
     <color name="search">#1A4B63</color>
     <color name="green">#769F3D</color>
     <color name="red">#AA0F0B</color>
-    <color name="note">#6D6868</color>
     <color name="darkGreen">#558F04</color>
     <color name="superDarkGreen">#3C6503</color>
     <color name="text_item">#558F04</color>
     <color name="fab">#F0BA16</color>
-
+    <color name="icons">#1C1F1F</color>
+    <color name="employer_title">#9DECA0</color>
+    <color name="note">#317BB8</color>
+    <color name="text">#1C1F1F</color>
 </resources>

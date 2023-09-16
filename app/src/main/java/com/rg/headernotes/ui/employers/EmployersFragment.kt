@@ -1,7 +1,6 @@
 package com.rg.headernotes.ui.employers
 
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -18,11 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.R
-import com.rg.headernotes.databinding.FragmentAddUserBinding
 import com.rg.headernotes.databinding.FragmentEmployersBinding
 import dagger.hilt.android.AndroidEntryPoint
 import com.rg.headernotes.util.UiState
-import com.rg.headernotes.util.showMessage
 
 @AndroidEntryPoint
 class EmployersFragment : Fragment() {

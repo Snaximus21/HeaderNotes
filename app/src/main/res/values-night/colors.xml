@@ -7,4 +7,8 @@
     <color name="inside_settings">#FFFDFC</color>
     <color name="stroke_settings">#D8A163</color>
     <color name="fab">#7D8FFC</color>
+    <color name="icons">#EBEFF0</color>
+    <color name="employer_title">#AAB3EE</color>
+    <color name="note">#6D6868</color>
+    <color name="text">#FFFFFFFF</color>
 </resources>

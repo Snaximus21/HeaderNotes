@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.rg.headernotes.databinding.ActivityMainBinding
+import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.getAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,14 +21,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         when(getAppTheme()) {
-            "Системная", "System" -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            Strings.THEME_DAY -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
-            "Темная", "Dark" -> {
+            Strings.THEME_NIGHT -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
-            "Светлая", "Light" -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            Strings.THEME_SYSTEM -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }
         }
         setContentView(binding.root)

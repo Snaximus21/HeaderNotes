@@ -2,15 +2,13 @@ package com.rg.headernotes.util
 
 import android.app.Activity
 import android.content.Context
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import com.rg.headernotes.MainActivity
-import com.rg.headernotes.MainActivity_GeneratedInjector
 import com.rg.headernotes.R
 
-fun Fragment.showMessage(message: String, action: (Snackbar) -> Unit = {}) : Snackbar{
+fun Fragment.showSnackbar(message: String, action: (Snackbar) -> Unit = {}) : Snackbar{
     val snackbar = Snackbar.make((host as MainActivity).binding.coordinatorLayout, message, Snackbar.LENGTH_SHORT)
     action(snackbar)
     snackbar.show()
@@ -30,22 +28,22 @@ fun String.isElementNull() : Boolean{
 
 fun Fragment.getAppTheme() : String{
     val preferences = requireContext().applicationContext.getSharedPreferences("themeApp", Context.MODE_PRIVATE)
-    val result = preferences.getString("themeApp", "Системная")
-    result ?: return "Системная"
+    val result = preferences.getString("themeApp", Strings.THEME_SYSTEM)
+    result ?: return Strings.THEME_SYSTEM
     return result
 }
 
 fun Activity.getAppTheme() : String{
     val preferences = applicationContext.getSharedPreferences("themeApp", Context.MODE_PRIVATE)
-    val result = preferences.getString("themeApp", "Системная")
-    result ?: return "Системная"
+    val result = preferences.getString("themeApp", Strings.THEME_SYSTEM)
+    result ?: return Strings.THEME_SYSTEM
     return result
 }
 fun Fragment.setAppTheme(theme: String){
     val preferences = requireContext().applicationContext.getSharedPreferences("themeApp", Context.MODE_PRIVATE)
     val outValue = when(theme){
-        "Светлая", "Темная", "Системная" -> theme
-        else -> "Системная"
+        Strings.THEME_DAY, Strings.THEME_NIGHT, Strings.THEME_SYSTEM -> theme
+        else -> Strings.THEME_SYSTEM
     }
     preferences.edit().putString("themeApp", outValue).apply()
 }

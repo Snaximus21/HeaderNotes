@@ -1,7 +1,5 @@
 package com.rg.headernotes.ui.settings
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,22 +7,18 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.databinding.FragmentSettingsBinding
 import com.jakewharton.processphoenix.ProcessPhoenix
-import com.rg.headernotes.R
-import com.rg.headernotes.databinding.FragmentAddUserBinding
-import com.rg.headernotes.di.HeaderNotesApp
 import com.rg.headernotes.ui.addUser.UserViewModel
+import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState
 import com.rg.headernotes.util.getAppTheme
 import com.rg.headernotes.util.setAppTheme
-import com.rg.headernotes.util.showMessage
+import com.rg.headernotes.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -46,9 +40,9 @@ class SettingsFragment : Fragment() {
 
         binding.toggleButtonDayNight.check(
             when (getAppTheme()) {
-                "Системная", "System" -> binding.buttonSystem.id
-                "Темная", "Dark" -> binding.buttonNight.id
-                "Светлая", "Light" -> binding.buttonDay.id
+                Strings.THEME_DAY -> binding.buttonDay.id
+                Strings.THEME_NIGHT -> binding.buttonNight.id
+                Strings.THEME_SYSTEM -> binding.buttonSystem.id
                 else -> binding.buttonSystem.id
             }
         )
@@ -59,17 +53,17 @@ class SettingsFragment : Fragment() {
                     when (toggleButton.checkedButtonId) {
                         binding.buttonDay.id -> {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                            "Светлая"
+                            Strings.THEME_DAY
                         }
 
                         binding.buttonNight.id -> {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                            "Темная"
+                            Strings.THEME_NIGHT
                         }
 
                         else -> {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                            "Системная"
+                            Strings.THEME_SYSTEM
                         }
                     }
                 )
@@ -94,11 +88,11 @@ class SettingsFragment : Fragment() {
                 is UiState.Success -> {
                     CoroutineScope(Dispatchers.Main).launch {
                         ProcessPhoenix.triggerRebirth(requireContext().applicationContext)
-                        showMessage("Профиль удалён.")
+                        showSnackbar("Профиль удалён.")
                     }
                 }
                 is UiState.Failure -> {
-                    showMessage("Профиль удалён.")
+                    showSnackbar("Профиль удалён.")
                 }
 
                 else -> {

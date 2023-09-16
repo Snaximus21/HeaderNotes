@@ -19,7 +19,7 @@ import com.rg.headernotes.util.GraphActions
 import com.rg.headernotes.util.UiState
 import com.rg.headernotes.util.isElementNull
 import com.rg.headernotes.util.navigate
-import com.rg.headernotes.util.showMessage
+import com.rg.headernotes.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,7 +33,7 @@ class AuthFragment : Fragment() {
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract(),
     ) { result ->
-        showMessage(
+        showSnackbar(
             if (result.resultCode != Activity.RESULT_OK)
                 "Ошибка при выполнении авторизации."
             else
@@ -58,7 +58,7 @@ class AuthFragment : Fragment() {
                 viewModel.user.observe(viewLifecycleOwner) {
                     when (it) {
                         is UiState.Loading -> {
-                            showMessage("Загрузка профиля...")
+                            showSnackbar("Загрузка профиля...")
                         }
 
                         is UiState.Success -> {
@@ -66,12 +66,12 @@ class AuthFragment : Fragment() {
                                 navigate(GraphActions.authToAddUser)
                             } else {
                                 navigate(GraphActions.authToMain)
-                                showMessage("Приветствую ${it.data.name}")
+                                showSnackbar("Приветствую ${it.data.name}")
                             }
                         }
 
                         is UiState.Failure -> {
-                            showMessage("Ошибка при загрузке данных пользователя.")
+                            showSnackbar("Ошибка при загрузке данных пользователя.")
                         }
                     }
                 }

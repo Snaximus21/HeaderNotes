@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:gravity="center"
-        android:text="Тема приложения"
+        android:text="@string/theme_header"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ночная"
+            android:text="@string/theme_night"
             app:icon="@drawable/icon_night" />
 
         <Button
@@ -43,7 +43,7 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Системная"
+            android:text="@string/theme_system"
             app:icon="@drawable/icon_settings" />
 
         <Button
@@ -51,7 +51,7 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Дневная"
+            android:text="@string/theme_day"
             app:icon="@drawable/icon_day" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -63,6 +63,8 @@
         android:text="Удалить профиль пользователя"
         android:layout_marginTop="12dp"
         app:icon="@drawable/icon_delete"
+        app:iconTint="@color/icons"
+        android:textColor="@color/text"
         app:backgroundTint="@color/red"
         app:layout_constraintStart_toStartOf="@+id/toggleButtonDayNight"
         app:layout_constraintEnd_toEndOf="@+id/toggleButtonDayNight"
