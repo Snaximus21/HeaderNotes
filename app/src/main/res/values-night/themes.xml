@@ -31,7 +31,7 @@
     </style>
 
 
-    <style name="Theme.HeaderNotes.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.HeaderNotes.AppBarOverlay" parent="ThemeOverlay.AppCompat.DayNight.ActionBar" />
 
-    <style name="Theme.HeaderNotes.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+    <style name="Theme.HeaderNotes.PopupOverlay" parent="ThemeOverlay.AppCompat.DayNight" />
 </resources>

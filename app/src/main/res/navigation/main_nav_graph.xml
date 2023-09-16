@@ -7,6 +7,13 @@
     app:startDestination="@+id/navEmployers">
 
     <fragment
+        android:id="@+id/navSettings"
+        android:name="com.rg.headernotes.ui.settings.SettingsFragment"
+        android:label="Настройки"
+        tools:layout="@layout/fragment_settings">
+    </fragment>
+
+    <fragment
         android:id="@+id/navEmployers"
         android:name="com.rg.headernotes.ui.employers.EmployersFragment"
         android:label="Сотрудники"

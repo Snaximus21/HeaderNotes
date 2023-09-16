@@ -86,6 +86,9 @@ dependencies {
     kapt ("com.google.dagger:hilt-compiler:$hiltVersion")
 
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
+
+    // Update Configuration
+    implementation ("com.jakewharton:process-phoenix:2.0.0")
 }
 
 kapt {

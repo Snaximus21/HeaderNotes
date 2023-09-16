@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.rg.headernotes.databinding.ActivityMainBinding
+import com.rg.headernotes.util.getAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,8 +18,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        when(preferences.getString("themeApp", "Системная")) {
+
+        when(getAppTheme()) {
             "Системная", "System" -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }
@@ -30,10 +31,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
         setContentView(binding.root)
-
-        /*window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )*/
     }
 }
