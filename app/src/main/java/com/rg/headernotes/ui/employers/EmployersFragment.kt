@@ -1,6 +1,7 @@
 package com.rg.headernotes.ui.employers
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +22,7 @@ import com.rg.headernotes.databinding.FragmentAddUserBinding
 import com.rg.headernotes.databinding.FragmentEmployersBinding
 import dagger.hilt.android.AndroidEntryPoint
 import com.rg.headernotes.util.UiState
+import com.rg.headernotes.util.showMessage
 
 @AndroidEntryPoint
 class EmployersFragment : Fragment() {
@@ -193,13 +195,14 @@ class EmployersFragment : Fragment() {
                     .setNegativeButton("Удалить") { dialog, which ->
                         viewModel.deleteEmployer(adapter.getEmployer(viewHolder.adapterPosition).fullName)
                         adapter.deleteEmployer(viewHolder.adapterPosition)
+
                         dialog.dismiss()
                     }
                     .setPositiveButton("Отмена") { dialog, which ->
-                        dialog.dismiss()
+                        adapter.notifyItemChanged(viewHolder.adapterPosition)
                         clearView(recyclerView, viewHolder)
-
                         recyclerView.resetPivot()
+                        dialog.dismiss()
                     }
                     .show()
             }

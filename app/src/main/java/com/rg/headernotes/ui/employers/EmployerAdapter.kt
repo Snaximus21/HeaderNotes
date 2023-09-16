@@ -1,10 +1,12 @@
 package com.rg.headernotes.ui.employers
 
+import android.R.attr.data
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.rg.headernotes.databinding.ItemEmployerBinding
+
 
 class EmployerAdapter() : Adapter<EmployerViewHolder>() {
     private var employersList = emptyList<EmployerModel>()
@@ -30,6 +32,13 @@ class EmployerAdapter() : Adapter<EmployerViewHolder>() {
             removeAt(position)
         }.toList()
         notifyItemRemoved(position)
+    }
+
+    fun restoreEmployer(employer: EmployerModel, position: Int) {
+        employersList.toMutableList().apply {
+            add(position, employer)
+        }
+        notifyItemInserted(position)
     }
 
     override fun getItemCount(): Int {
