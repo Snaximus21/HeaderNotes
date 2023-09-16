@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.rg.headernotes.MainActivity
 import com.rg.headernotes.R
+import com.rg.headernotes.databinding.FragmentAddUserBinding
 import com.rg.headernotes.databinding.FragmentMainBinding
 import com.rg.headernotes.databinding.HeaderNavigationBinding
 import com.rg.headernotes.ui.auth.AuthViewModel
@@ -26,13 +27,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
-    private val binding by lazy { FragmentMainBinding.inflate(layoutInflater) }
+    private lateinit var binding: FragmentMainBinding
     private val viewModelAuth by viewModels<AuthViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding = FragmentMainBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -84,11 +86,6 @@ class MainFragment : Fragment() {
                     headerBinding.textViewSubdivision.text = Strings.ERROR
                 }
             }
-        }
-
-        headerBinding.buttonSettings.setOnClickListener {
-            showMessage("UserClicked")
-            binding.drawerLayout.close()
         }
     }
 }

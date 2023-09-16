@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AddUserFragment : Fragment() {
     private lateinit var binding: FragmentAddUserBinding
-    private val viewModel by viewModels<AddUserViewModel>()
+    private val viewModel by viewModels<UserViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

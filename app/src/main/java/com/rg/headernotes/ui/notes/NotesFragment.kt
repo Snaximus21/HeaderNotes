@@ -12,13 +12,14 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.rg.headernotes.R
+import com.rg.headernotes.databinding.FragmentAddUserBinding
 import com.rg.headernotes.databinding.FragmentNotesBinding
 import com.rg.headernotes.util.UiState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NotesFragment : Fragment() {
-    private val binding by lazy { FragmentNotesBinding.inflate(layoutInflater) }
+    private lateinit var binding: FragmentNotesBinding
     private val viewModel by viewModels<NotesViewModel>()
     private val adapter by lazy { NoteAdapter() }
 
@@ -28,6 +29,7 @@ class NotesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding = FragmentNotesBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

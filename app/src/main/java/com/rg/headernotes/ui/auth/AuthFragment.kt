@@ -3,14 +3,11 @@ package com.rg.headernotes.ui.auth
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
@@ -18,19 +15,12 @@ import com.firebase.ui.auth.AuthUI.IdpConfig.GoogleBuilder
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAuthBinding
-import com.rg.headernotes.ui.addUser.AddUserViewModel
-import com.rg.headernotes.ui.employers.EmployerModel
 import com.rg.headernotes.util.GraphActions
-import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState
 import com.rg.headernotes.util.isElementNull
 import com.rg.headernotes.util.navigate
 import com.rg.headernotes.util.showMessage
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AuthFragment : Fragment() {
@@ -56,6 +46,11 @@ class AuthFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAuthBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         firebaseAuth = FirebaseAuth.getInstance()
         authStateListener = AuthStateListener { firebaseAuth ->
             firebaseAuth.currentUser?.let {
@@ -90,18 +85,17 @@ class AuthFragment : Fragment() {
                 signInLauncher.launch(signInIntent)
             }
         }
-        return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         authStateListener?.let { stateListener ->
             firebaseAuth?.addAuthStateListener(stateListener)
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         authStateListener?.let { stateListener ->
             firebaseAuth?.removeAuthStateListener(stateListener)
         }

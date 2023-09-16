@@ -17,14 +17,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.R
+import com.rg.headernotes.databinding.FragmentAddUserBinding
 import com.rg.headernotes.databinding.FragmentEmployersBinding
 import dagger.hilt.android.AndroidEntryPoint
 import com.rg.headernotes.util.UiState
 
 @AndroidEntryPoint
 class EmployersFragment : Fragment() {
+    private lateinit var binding: FragmentEmployersBinding
     private val viewModel by viewModels<EmployersViewModel>()
-    private val binding by lazy { FragmentEmployersBinding.inflate(layoutInflater) }
     private val adapter by lazy { EmployerAdapter() }
 
     override fun onCreateView(
@@ -32,6 +33,7 @@ class EmployersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding = FragmentEmployersBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

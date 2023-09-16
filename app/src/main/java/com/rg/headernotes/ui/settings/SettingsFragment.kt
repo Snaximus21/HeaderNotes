@@ -8,12 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.databinding.FragmentSettingsBinding
 import com.jakewharton.processphoenix.ProcessPhoenix
+import com.rg.headernotes.R
+import com.rg.headernotes.databinding.FragmentAddUserBinding
 import com.rg.headernotes.di.HeaderNotesApp
+import com.rg.headernotes.ui.addUser.UserViewModel
+import com.rg.headernotes.util.UiState
 import com.rg.headernotes.util.getAppTheme
 import com.rg.headernotes.util.setAppTheme
+import com.rg.headernotes.util.showMessage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,23 +29,21 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment() {
-    private val binding by lazy { FragmentSettingsBinding.inflate(layoutInflater) }
+    private lateinit var binding: FragmentSettingsBinding
+    private val viewModel by viewModels<UserViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding = FragmentSettingsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val preferences = requireContext().applicationContext.getSharedPreferences(
-            "themeApp",
-            Context.MODE_PRIVATE
-        )
         binding.toggleButtonDayNight.check(
             when (getAppTheme()) {
                 "Системная", "System" -> binding.buttonSystem.id
@@ -68,6 +73,37 @@ class SettingsFragment : Fragment() {
                         }
                     }
                 )
+            }
+        }
+
+        binding.buttonDeleteUser.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Удаление профиля")
+                .setMessage("Вы действительно хотите удалить Ваш профиль без возможности восстановления? В случае удаления, вы потеряете все вложенные данные.")
+                .setNegativeButton("Удалить") { dialog, which ->
+                    viewModel.deleteUser()
+                    dialog.dismiss()
+                }
+                .setPositiveButton("Отмена") { dialog, which ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+        viewModel.deleteUser.observe(viewLifecycleOwner){
+            when(it){
+                is UiState.Success -> {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        ProcessPhoenix.triggerRebirth(requireContext().applicationContext)
+                        showMessage("Профиль удалён.")
+                    }
+                }
+                is UiState.Failure -> {
+                    showMessage("Профиль удалён.")
+                }
+
+                else -> {
+
+                }
             }
         }
     }

@@ -35,9 +35,33 @@ class UserRepository @Inject constructor(private val dataBase: FirebaseFirestore
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
                 .get()
-                .addOnSuccessListener { query ->
-                    query.forEach { document ->
+                .addOnSuccessListener { employers ->
+                    for (employer in employers) {
+                        dataBase
+                            .collection(FireStoreTables.USER)
+                            .document(user.uid)
+                            .collection(FireStoreTables.EMPLOYERS)
+                            .document(employer.data["fullName"].toString())
+                            .delete()
+                    }
+                }
+                .addOnFailureListener {
 
+                }
+
+            dataBase
+                .collection(FireStoreTables.USER)
+                .document(user.uid)
+                .collection(FireStoreTables.NOTES)
+                .get()
+                .addOnSuccessListener { employers ->
+                    for (employer in employers) {
+                        dataBase
+                            .collection(FireStoreTables.USER)
+                            .document(user.uid)
+                            .collection(FireStoreTables.NOTES)
+                            .document(employer.data["noteTitle"].toString())
+                            .delete()
                     }
                 }
                 .addOnFailureListener {

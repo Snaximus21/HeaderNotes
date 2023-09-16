@@ -41,17 +41,4 @@
             android:textColor="?attr/colorOnSurfaceVariant" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonSettings"
-        style="?attr/materialIconButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        app:icon="@drawable/icon_settings"
-        app:iconTint="?attr/colorOnSurfaceVariant"
-        app:iconSize="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/headerLayout"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
