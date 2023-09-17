@@ -14,13 +14,14 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentNotesBinding
+import com.rg.headernotes.util.ItemListener
 import com.rg.headernotes.util.RequestCodes
 import com.rg.headernotes.util.UiState
 import com.rg.headernotes.util.showPopupMenu
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotesFragment : Fragment(), NoteListener {
+class NotesFragment : Fragment(), ItemListener {
     private lateinit var binding: FragmentNotesBinding
     private val viewModel by viewModels<NotesViewModel>()
     private val adapter by lazy { NoteAdapter(this) }
@@ -143,7 +144,7 @@ class NotesFragment : Fragment(), NoteListener {
         }
     }
 
-    override fun onNoteClickListener(position: Int) {
+    override fun onItemClickListener(position: Int) {
         childFragmentManager.beginTransaction().apply {
             replace(R.id.fragmentContainerNotes, AddNoteFragment().apply {
                 arguments = Bundle().apply {
@@ -159,7 +160,7 @@ class NotesFragment : Fragment(), NoteListener {
         binding.coordinatorLayout.visibility = View.INVISIBLE
     }
 
-    override fun onLongNoteClickListener(view: View, position: Int) {
+    override fun onLongItemClickListener(view: View, position: Int) {
         showPopupMenu(
             view,
             R.menu.item_menu,

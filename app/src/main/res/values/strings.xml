@@ -6,7 +6,6 @@
     <string name="delete_button">Удалить</string>
     <string name="delete_employer_button">Удалить профиль сотрудника</string>
     <string name="delete_user_button">Удалить все данные профиля</string>
-    <string name="back_button">Назад</string>
     <string name="to_main_fragment_button">На главную страницу</string>
     <string name="signed_out_toast">Вы вышли из профиля</string>
     <string name="my_employers">Мои сотрудники</string>
@@ -62,6 +61,14 @@
     <string name="note_title">Заметка</string>
     <string name="note_subtitle">Текст заметки</string>
     <string name="note_date">Дата заметки</string>
+
+    <string name="task_name">Название задачи</string>
+    <string name="task_subtitle">Текст задачи</string>
+    <string name="task_date">Крайний срок:</string>
+    <string name="date_button">Выбрать дату</string>
+
+    <string name="back_button">Назад</string>
+    <string name="apply_button">Готово</string>
 
     <string name="add_user">Добро пожаловать в приложение. Пожалуйста, введите ваши учётные данные.</string>
     <string name="add_new_employer">Пожалуйста введите учётные данные сотрудника.</string>

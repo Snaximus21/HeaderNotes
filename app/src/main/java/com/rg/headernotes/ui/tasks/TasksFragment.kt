@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentSettingsBinding
 import com.rg.headernotes.databinding.FragmentTasksBinding
@@ -18,12 +19,18 @@ import com.rg.headernotes.ui.notes.AddNoteFragment
 import com.rg.headernotes.ui.notes.NoteAdapter
 import com.rg.headernotes.ui.notes.NoteModel
 import com.rg.headernotes.ui.notes.NotesViewModel
+import com.rg.headernotes.util.ItemListener
+import com.rg.headernotes.util.RequestCodes
 import com.rg.headernotes.util.UiState
+import com.rg.headernotes.util.showPopupMenu
 import com.rg.headertasks.ui.tasks.TaskAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TasksFragment : Fragment(), TaskLitener {
+class TasksFragment : Fragment(), ItemListener {
     private lateinit var binding: FragmentTasksBinding
     private val adapter by lazy { TaskAdapter(this) }
     private val viewModel by viewModels<TasksViewModel>()
@@ -69,13 +76,12 @@ class TasksFragment : Fragment(), TaskLitener {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = layoutManager
 
-        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
         binding.floatingActionButton.setOnClickListener {
             childFragmentManager.beginTransaction().apply {
-                replace(R.id.fragmentContainerNotes, AddNoteFragment().apply {
-                    arguments = Bundle().apply { putParcelable("newTask", TaskModel()) }
-                })
+                replace(R.id.fragmentContainerTasks, AddTaskFragment())
                 addToBackStack(null)
                 commit()
             }
@@ -83,14 +89,13 @@ class TasksFragment : Fragment(), TaskLitener {
         }
 
         childFragmentManager.setFragmentResultListener(
-            "newTask",
+            RequestCodes.setTask,
             viewLifecycleOwner
-        ) { requestKey, result ->
-            if (requestKey == "newTask") {
-                result.getParcelable("taskModel", TaskModel::class.java)?.let {
-                    viewModel.newTask(it)
-                }
+        ) { _, result ->
+            result.getParcelable(RequestCodes.newTask, TaskModel::class.java)?.let {
+                viewModel.newTask(it)
             }
+
             binding.coordinatorLayout.visibility = View.VISIBLE
         }
 
@@ -104,11 +109,28 @@ class TasksFragment : Fragment(), TaskLitener {
                 is UiState.Success -> {
                     binding.progressBarLoading.visibility = View.INVISIBLE
                     adapter.setTasks(state.data)
+                    recyclerView.resetPivot()
                 }
 
                 is UiState.Failure -> {
                     binding.progressBarLoading.visibility = View.INVISIBLE
 
+                }
+            }
+        }
+
+        viewModel.update.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Loading -> {
+                    binding.progressBarLoading.visibility = View.VISIBLE
+                }
+
+                is UiState.Success -> {
+                    viewModel.getAllTasks()
+                }
+
+                is UiState.Failure -> {
+                    binding.progressBarLoading.visibility = View.INVISIBLE
                 }
             }
         }
@@ -129,14 +151,75 @@ class TasksFragment : Fragment(), TaskLitener {
                 }
             }
         }
+
+        childFragmentManager.setFragmentResultListener(
+            RequestCodes.setTask,
+            viewLifecycleOwner
+        ) { _, result ->
+            result.getParcelable(RequestCodes.newTask, TaskModel::class.java)?.let {
+                viewModel.newTask(it)
+            }
+            result.getParcelable(RequestCodes.editTask, TaskModel::class.java)?.let {
+                viewModel.updateTask(it)
+            }
+            binding.coordinatorLayout.visibility = View.VISIBLE
+        }
     }
 
-    override fun onButtonDoneClicked(position: Int) {
-        viewModel.deleteTask(adapter.getTask(position))
-        adapter.deleteTask(position)
+    override fun onItemClickListener(position: Int) {
+        childFragmentManager.beginTransaction().apply {
+            replace(R.id.fragmentContainerTasks, AddTaskFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(
+                        RequestCodes.editTask,
+                        adapter.getTask(position)
+                    )
+                }
+            })
+            addToBackStack(null)
+            commit()
+        }
+        binding.coordinatorLayout.visibility = View.INVISIBLE
     }
 
-    override fun onButtonPostponeClicked(position: Int) {
+    override fun onLongItemClickListener(view: View, position: Int) {
+        showPopupMenu(
+            view,
+            R.menu.item_menu,
+            { menu ->
+                when(menu.itemId){
+                    R.id.deletePopup -> {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("Удаление задачи")
+                            .setMessage("Вы действительно хотите удалить задачу без возможности восстановления?")
+                            .setNegativeButton("Удалить") { dialog, which ->
+                                viewModel.deleteTask(adapter.getTask(position))
+                                adapter.deleteTask(position)
 
+                                dialog.dismiss()
+                            }
+                            .setPositiveButton("Отмена") { dialog, which ->
+                                dialog.dismiss()
+                            }
+                            .show()
+                    }
+                    R.id.editPopup -> {
+                        childFragmentManager.beginTransaction().apply {
+                            replace(R.id.fragmentContainerTasks, AddTaskFragment().apply {
+                                arguments = Bundle().apply {
+                                    putParcelable(
+                                        RequestCodes.editTask,
+                                        adapter.getTask(position)
+                                    )
+                                }
+                            })
+                            addToBackStack(null)
+                            commit()
+                        }
+                        binding.coordinatorLayout.visibility = View.INVISIBLE
+                    }
+                }
+            }
+        )
     }
 }

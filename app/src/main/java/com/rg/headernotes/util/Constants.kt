@@ -44,6 +44,7 @@ object MenuItems{
 }
 
 object RequestCodes {
+    const val setTask = "setTask"
     const val newTask = "newTask"
     const val editTask = "editTask"
     const val setNote = "setNote"

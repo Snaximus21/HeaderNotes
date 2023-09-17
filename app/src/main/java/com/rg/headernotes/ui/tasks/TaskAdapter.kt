@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rg.headernotes.databinding.ItemTaskBinding
-import com.rg.headernotes.ui.tasks.TaskLitener
 import com.rg.headernotes.ui.tasks.TaskModel
 import com.rg.headernotes.ui.tasks.TaskViewHolder
+import com.rg.headernotes.util.ItemListener
 
 class TaskAdapter(
-    private val taskListener: TaskLitener
+    private val itemListener: ItemListener
 ) : RecyclerView.Adapter<TaskViewHolder>() {
     private var tasksList = emptyList<TaskModel>()
 
@@ -42,7 +42,7 @@ class TaskAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        return TaskViewHolder(ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false), taskListener)
+        return TaskViewHolder(ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false), itemListener)
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {

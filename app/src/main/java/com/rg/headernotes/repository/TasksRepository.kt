@@ -82,7 +82,20 @@ class TasksRepository @Inject constructor(private val database: FirebaseFirestor
     }
 
     override fun updateTask(task: TaskModel, result: (UiState<String>) -> Unit) {
-
+        FirebaseAuth.getInstance().currentUser?.let { user ->
+            database
+                .collection(FireStoreTables.USER)
+                .document(user.uid)
+                .collection(FireStoreTables.TASKS)
+                .document(task.taskName)
+                .set(task)
+                .addOnSuccessListener {
+                    result.invoke(UiState.Success(Strings.UPDATED))
+                }
+                .addOnFailureListener {
+                    result.invoke(UiState.Failure(Strings.ERROR))
+                }
+        }
     }
 
     override fun deleteTask(task: TaskModel, result: (UiState<String>) -> Unit) {
