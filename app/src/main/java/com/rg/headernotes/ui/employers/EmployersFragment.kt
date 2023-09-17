@@ -71,6 +71,14 @@ class EmployersFragment : Fragment() {
             }
         )
 
+        binding.floatingActionButton.setOnClickListener {
+            childFragmentManager.beginTransaction().apply {
+                replace(R.id.fragmentContainerEmployers, AddEmployerFragment())
+                addToBackStack(null)
+                commit()
+            }
+            binding.coordinatorLayout.visibility = View.INVISIBLE
+        }
 
         viewModel.getAllEmployers()
         viewModel.allEmployers.observe(viewLifecycleOwner) { state ->
@@ -82,6 +90,7 @@ class EmployersFragment : Fragment() {
                 is UiState.Success -> {
                     binding.progressBarLoading.visibility = View.INVISIBLE
                     adapter.setEmployers(state.data)
+                    binding.textViewListIsEmpty.visibility = if(adapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
                 }
 
                 is UiState.Failure -> {
@@ -89,15 +98,6 @@ class EmployersFragment : Fragment() {
 
                 }
             }
-        }
-
-        binding.floatingActionButton.setOnClickListener {
-            childFragmentManager.beginTransaction().apply {
-                replace(R.id.fragmentContainerEmployers, AddEmployerFragment())
-                addToBackStack(null)
-                commit()
-            }
-            binding.coordinatorLayout.visibility = View.INVISIBLE
         }
 
         viewModel.newEmployer.observe(viewLifecycleOwner) {
@@ -109,11 +109,18 @@ class EmployersFragment : Fragment() {
                 is UiState.Success -> {
                     binding.progressBarLoading.visibility = View.INVISIBLE
                     adapter.addEmployer(listOf(it.data))
+                    binding.textViewListIsEmpty.visibility = if(adapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
                 }
 
                 is UiState.Failure -> {
                     binding.progressBarLoading.visibility = View.INVISIBLE
                 }
+            }
+        }
+
+        viewModel.delete.observe(viewLifecycleOwner){
+            if(it is UiState.Success){
+                binding.textViewListIsEmpty.visibility = if(adapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
             }
         }
 
@@ -209,6 +216,4 @@ class EmployersFragment : Fragment() {
             }
         }).attachToRecyclerView(recyclerView)
     }
-
-
 }

@@ -24,8 +24,10 @@ class TaskViewHolder(private val binding: ItemTaskBinding, private val itemListe
         binding.textViewTask.text = model.taskNote
 
         val time = if (model.taskDate.isElementNull()) "" else format.format(Date(model.taskDate.toLong()))
-        val timeLow = kotlin.math.abs(model.taskDate.toLong() - Calendar.getInstance().timeInMillis) < 86400000
-        if (timeLow) binding.textViewDateTime.setTextColor(Color.RED)
+        val timeLow = (model.taskDate.toLong() - Calendar.getInstance().timeInMillis) < 86400000
+        if (timeLow) {
+            binding.imageViewTask.setColorFilter(Color.RED)
+        }
 
         binding.textViewDateTime.text = time
 

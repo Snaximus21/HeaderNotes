@@ -110,6 +110,7 @@ class TasksFragment : Fragment(), ItemListener {
                     binding.progressBarLoading.visibility = View.INVISIBLE
                     adapter.setTasks(state.data)
                     recyclerView.resetPivot()
+                    binding.textViewListIsEmpty.visibility = if(adapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
                 }
 
                 is UiState.Failure -> {
@@ -127,6 +128,7 @@ class TasksFragment : Fragment(), ItemListener {
 
                 is UiState.Success -> {
                     viewModel.getAllTasks()
+                    binding.textViewListIsEmpty.visibility = if(adapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
                 }
 
                 is UiState.Failure -> {
@@ -144,11 +146,18 @@ class TasksFragment : Fragment(), ItemListener {
                 is UiState.Success -> {
                     binding.progressBarLoading.visibility = View.INVISIBLE
                     adapter.addTask(listOf(it.data))
+                    binding.textViewListIsEmpty.visibility = if(adapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
                 }
 
                 is UiState.Failure -> {
                     binding.progressBarLoading.visibility = View.INVISIBLE
                 }
+            }
+        }
+
+        viewModel.delete.observe(viewLifecycleOwner){
+            if(it is UiState.Success){
+                binding.textViewListIsEmpty.visibility = if(adapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
             }
         }
 

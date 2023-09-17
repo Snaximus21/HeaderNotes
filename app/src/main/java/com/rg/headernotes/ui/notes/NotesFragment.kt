@@ -70,26 +70,6 @@ class NotesFragment : Fragment(), ItemListener {
         recyclerView.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
-
-        viewModel.getAllNotes()
-        viewModel.allNotes.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is UiState.Loading -> {
-                    binding.progressBarLoading.visibility = View.VISIBLE
-                }
-
-                is UiState.Success -> {
-                    binding.progressBarLoading.visibility = View.INVISIBLE
-                    adapter.setNotes(state.data)
-                }
-
-                is UiState.Failure -> {
-                    binding.progressBarLoading.visibility = View.INVISIBLE
-
-                }
-            }
-        }
-
         binding.floatingActionButton.setOnClickListener {
             childFragmentManager.beginTransaction().apply {
                 replace(R.id.fragmentContainerNotes, AddNoteFragment())
@@ -111,6 +91,26 @@ class NotesFragment : Fragment(), ItemListener {
             }
             binding.coordinatorLayout.visibility = View.VISIBLE
         }
+
+        viewModel.getAllNotes()
+        viewModel.allNotes.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    binding.progressBarLoading.visibility = View.VISIBLE
+                }
+
+                is UiState.Success -> {
+                    binding.progressBarLoading.visibility = View.INVISIBLE
+                    adapter.setNotes(state.data)
+                    binding.textViewListIsEmpty.visibility = if(adapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
+                }
+
+                is UiState.Failure -> {
+                    binding.progressBarLoading.visibility = View.INVISIBLE
+
+                }
+            }
+        }
         viewModel.newNote.observe(viewLifecycleOwner) {
             when (it) {
                 is UiState.Loading -> {
@@ -120,6 +120,7 @@ class NotesFragment : Fragment(), ItemListener {
                 is UiState.Success -> {
                     binding.progressBarLoading.visibility = View.INVISIBLE
                     adapter.addNote(listOf(it.data))
+                    binding.textViewListIsEmpty.visibility = if(adapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
                 }
 
                 is UiState.Failure -> {
@@ -140,6 +141,11 @@ class NotesFragment : Fragment(), ItemListener {
                 is UiState.Failure -> {
                     binding.progressBarLoading.visibility = View.INVISIBLE
                 }
+            }
+        }
+        viewModel.delete.observe(viewLifecycleOwner){
+            if(it is UiState.Success){
+                binding.textViewListIsEmpty.visibility = if(adapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
             }
         }
     }
