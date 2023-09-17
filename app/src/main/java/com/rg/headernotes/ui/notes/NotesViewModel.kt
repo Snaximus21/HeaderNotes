@@ -36,7 +36,7 @@ class NotesViewModel @Inject constructor(private val repository: NotesRepository
 
     private val _delete = MutableLiveData<UiState<String>>()
     val delete: LiveData<UiState<String>> get() = _delete
-    fun deleteEmployer(note: NoteModel) {
+    fun deleteNote(note: NoteModel) {
         _delete.value = UiState.Loading
         viewModelScope.launch {
             repository.deleteNote(note) {

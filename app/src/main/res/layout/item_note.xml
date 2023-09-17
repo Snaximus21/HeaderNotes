@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/noteItem"
@@ -7,6 +7,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
+    app:strokeColor="@color/icons"
+    app:strokeWidth="2dp"
     app:cardElevation="8dp">
 
     <LinearLayout
@@ -23,18 +25,18 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:includeFontPadding="true"
-            android:textStyle="bold"
             android:text="@string/note_title"
             android:textColor="@color/text"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:dividerThickness = "3dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            app:dividerColor="@color/text"/>
+            app:dividerColor="@color/text"
+            app:dividerThickness="3dp" />
 
         <TextView
             android:id="@+id/textViewSubTitle"
@@ -45,10 +47,10 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
             android:includeFontPadding="false"
+            android:maxHeight="100dp"
             android:text="@string/note_subtitle"
             android:textColor="@color/text"
-            android:textSize="12sp"
-            android:maxHeight="100dp"/>
+            android:textSize="12sp" />
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
@@ -56,22 +58,22 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:dividerColor="@color/text"
-            app:dividerThickness = "1dp"/>
+            app:dividerThickness="1dp" />
 
         <TextView
             android:id="@+id/textViewDateTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:includeFontPadding="false"
+            android:paddingTop="8dp"
             android:text="@string/note_date"
             android:textColor="@color/text"
-            android:textStyle="italic"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textStyle="italic" />
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

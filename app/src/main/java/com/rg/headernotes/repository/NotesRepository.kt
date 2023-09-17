@@ -84,7 +84,20 @@ class NotesRepository @Inject constructor(private val database: FirebaseFirestor
     }
 
     override fun updateNote(note: NoteModel, result: (UiState<String>) -> Unit) {
-
+        FirebaseAuth.getInstance().currentUser?.let { user ->
+            database
+                .collection(FireStoreTables.USER)
+                .document(user.uid)
+                .collection(FireStoreTables.NOTES)
+                .document(note.noteTitle)
+                .set(note)
+                .addOnSuccessListener {
+                    result.invoke(UiState.Success(Strings.UPDATED))
+                }
+                .addOnFailureListener {
+                    result.invoke(UiState.Failure(Strings.ERROR))
+                }
+        }
     }
 
     override fun deleteNote(note: NoteModel, result: (UiState<String>) -> Unit) {

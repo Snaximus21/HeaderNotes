@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rg.headernotes.databinding.ItemNoteBinding
 
-class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
+class NoteAdapter(private val noteListener: NoteListener) : RecyclerView.Adapter<NoteViewHolder>() {
     private var notesList = emptyList<NoteModel>()
 
     fun getNote(pos: Int) : NoteModel {
@@ -37,7 +37,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        return NoteViewHolder(ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return NoteViewHolder(ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false), noteListener)
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {

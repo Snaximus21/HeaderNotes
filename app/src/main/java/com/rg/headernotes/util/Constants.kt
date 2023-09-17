@@ -21,6 +21,7 @@ object FireStoreTables {
     const val USER = "users"
     const val EMPLOYERS = "employers"
     const val NOTES = "notes"
+    const val TASKS = "tasks"
 }
 
 object Strings {
@@ -40,4 +41,12 @@ object MenuItems{
     val TASKS = R.id.navTasks
     val EMPLOYERS = R.id.navEmployers
     val SETTINGS = R.id.navSettings
+}
+
+object RequestCodes {
+    const val newTask = "newTask"
+    const val editTask = "editTask"
+    const val setNote = "setNote"
+    const val newNote = "newNote"
+    const val editNote = "editNote"
 }

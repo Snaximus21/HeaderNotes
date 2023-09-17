@@ -11,17 +11,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.R
-import com.rg.headernotes.databinding.FragmentAddUserBinding
 import com.rg.headernotes.databinding.FragmentNotesBinding
+import com.rg.headernotes.util.RequestCodes
 import com.rg.headernotes.util.UiState
+import com.rg.headernotes.util.showPopupMenu
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotesFragment : Fragment() {
+class NotesFragment : Fragment(), NoteListener {
     private lateinit var binding: FragmentNotesBinding
     private val viewModel by viewModels<NotesViewModel>()
-    private val adapter by lazy { NoteAdapter() }
+    private val adapter by lazy { NoteAdapter(this) }
 
 
     override fun onCreateView(
@@ -64,6 +66,9 @@ class NotesFragment : Fragment() {
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = layoutManager
+        recyclerView.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+
 
         viewModel.getAllNotes()
         viewModel.allNotes.observe(viewLifecycleOwner) { state ->
@@ -83,6 +88,7 @@ class NotesFragment : Fragment() {
                 }
             }
         }
+
         binding.floatingActionButton.setOnClickListener {
             childFragmentManager.beginTransaction().apply {
                 replace(R.id.fragmentContainerNotes, AddNoteFragment())
@@ -91,16 +97,16 @@ class NotesFragment : Fragment() {
             }
             binding.coordinatorLayout.visibility = View.INVISIBLE
         }
-        recyclerView.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+
         childFragmentManager.setFragmentResultListener(
-            "newNote",
+            RequestCodes.setNote,
             viewLifecycleOwner
         ) { requestKey, result ->
-            if (requestKey == "newNote") {
-                result.getParcelable("noteModel", NoteModel::class.java)?.let {
-                    viewModel.newNote(it)
-                }
+            result.getParcelable(RequestCodes.newNote, NoteModel::class.java)?.let {
+                viewModel.newNote(it)
+            }
+            result.getParcelable(RequestCodes.editNote, NoteModel::class.java)?.let {
+                viewModel.updateNote(it)
             }
             binding.coordinatorLayout.visibility = View.VISIBLE
         }
@@ -120,5 +126,77 @@ class NotesFragment : Fragment() {
                 }
             }
         }
+        viewModel.update.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Loading -> {
+                    binding.progressBarLoading.visibility = View.VISIBLE
+                }
+
+                is UiState.Success -> {
+                    viewModel.getAllNotes()
+                }
+
+                is UiState.Failure -> {
+                    binding.progressBarLoading.visibility = View.INVISIBLE
+                }
+            }
+        }
+    }
+
+    override fun onNoteClickListener(position: Int) {
+        childFragmentManager.beginTransaction().apply {
+            replace(R.id.fragmentContainerNotes, AddNoteFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(
+                        RequestCodes.editNote,
+                        adapter.getNote(position)
+                    )
+                }
+            })
+            addToBackStack(null)
+            commit()
+        }
+        binding.coordinatorLayout.visibility = View.INVISIBLE
+    }
+
+    override fun onLongNoteClickListener(view: View, position: Int) {
+        showPopupMenu(
+            view,
+            R.menu.item_menu,
+            { menu ->
+                when(menu.itemId){
+                    R.id.deletePopup -> {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("Удаление заметки")
+                            .setMessage("Вы действительно хотите удалить заметку без возможности восстановления?")
+                            .setNegativeButton("Удалить") { dialog, which ->
+                                viewModel.deleteNote(adapter.getNote(position))
+                                adapter.deleteNote(position)
+
+                                dialog.dismiss()
+                            }
+                            .setPositiveButton("Отмена") { dialog, which ->
+                                dialog.dismiss()
+                            }
+                            .show()
+                    }
+                    R.id.editPopup -> {
+                        childFragmentManager.beginTransaction().apply {
+                            replace(R.id.fragmentContainerNotes, AddNoteFragment().apply {
+                                arguments = Bundle().apply {
+                                    putParcelable(
+                                        RequestCodes.editNote,
+                                        adapter.getNote(position)
+                                    )
+                                }
+                            })
+                            addToBackStack(null)
+                            commit()
+                        }
+                        binding.coordinatorLayout.visibility = View.INVISIBLE
+                    }
+                }
+            }
+        )
     }
 }

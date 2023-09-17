@@ -2,7 +2,8 @@
     <string name="app_name" translatable="false">HeaderNotes</string>
     <string name="sign_out_button">Выйти из профиля</string>
     <string name="create_button">Создать</string>
-    <string name="update_button">Обновить</string>
+    <string name="edit_button">Изменить</string>
+    <string name="delete_button">Удалить</string>
     <string name="delete_employer_button">Удалить профиль сотрудника</string>
     <string name="delete_user_button">Удалить все данные профиля</string>
     <string name="back_button">Назад</string>
@@ -24,7 +25,6 @@
     <string name="delete_note">Вы действительно хотите удалить запись?</string>
     <string name="delete_profile">Вы действительно хотите удалить профиль?</string>
     <string name="delete_profile_msg">Отменить действие будет невозможно!</string>
-    <string name="delete_yes">Удалить</string>
     <string name="add">добавить</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>

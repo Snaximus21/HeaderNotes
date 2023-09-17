@@ -2,6 +2,10 @@ package com.rg.headernotes.util
 
 import android.app.Activity
 import android.content.Context
+import android.view.MenuItem
+import android.view.View
+import android.widget.PopupMenu
+import androidx.annotation.MenuRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
@@ -10,7 +14,7 @@ import com.rg.headernotes.R
 
 fun Fragment.showSnackbar(message: String, action: (Snackbar) -> Unit = {}) : Snackbar{
     val snackbar = Snackbar.make((host as MainActivity).binding.coordinatorLayout, message, Snackbar.LENGTH_SHORT)
-    action(snackbar)
+    action.invoke(snackbar)
     snackbar.show()
     return snackbar
 }
@@ -46,4 +50,17 @@ fun Fragment.setAppTheme(theme: String){
         else -> Strings.THEME_SYSTEM
     }
     preferences.edit().putString("themeApp", outValue).apply()
+}
+
+fun Fragment.showPopupMenu(v: View, @MenuRes menuRes: Int, menuItemClickListener: (MenuItem) -> Unit = {}, onDismissListener: () -> Unit = {}) {
+    PopupMenu(requireContext(), v).apply {
+        menuInflater.inflate(menuRes, menu)
+        setOnMenuItemClickListener { menuItem: MenuItem ->
+            menuItemClickListener.invoke(menuItem)
+            true
+        }
+        setOnDismissListener {
+            onDismissListener.invoke()
+        }
+    }.show()
 }

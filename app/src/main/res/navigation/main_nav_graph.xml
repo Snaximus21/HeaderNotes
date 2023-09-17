@@ -27,4 +27,11 @@
         tools:layout="@layout/fragment_notes">
     </fragment>
 
+    <fragment
+        android:id="@+id/navTasks"
+        android:name="com.rg.headernotes.ui.tasks.TasksFragment"
+        android:label="Задачи"
+        tools:layout="@layout/fragment_tasks">
+    </fragment>
+
 </navigation>

@@ -5,9 +5,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.MenuRes
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -67,6 +70,7 @@ class EmployersFragment : Fragment() {
                 }
             }
         )
+
 
         viewModel.getAllEmployers()
         viewModel.allEmployers.observe(viewLifecycleOwner) { state ->
@@ -205,4 +209,6 @@ class EmployersFragment : Fragment() {
             }
         }).attachToRecyclerView(recyclerView)
     }
+
+
 }
