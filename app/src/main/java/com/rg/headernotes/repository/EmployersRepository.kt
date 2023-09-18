@@ -83,7 +83,6 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
 
     override fun updateEmployer(
         employer: EmployerModel,
-        employerName: String,
         result: (UiState<String>) -> Unit
     ) {
         FirebaseAuth.getInstance().currentUser?.let { user ->

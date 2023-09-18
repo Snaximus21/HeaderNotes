@@ -8,7 +8,7 @@ import com.rg.headernotes.databinding.ItemNoteBinding
 import com.rg.headernotes.models.NoteModel
 import com.rg.headernotes.util.ItemListener
 
-class NoteAdapter(private val itemListener: ItemListener) : RecyclerView.Adapter<NoteViewHolder>() {
+class NoteAdapter(private val itemListener: ItemListener?) : RecyclerView.Adapter<NoteViewHolder>() {
     private var notesList = emptyList<NoteModel>()
 
     fun getNote(pos: Int) : NoteModel {

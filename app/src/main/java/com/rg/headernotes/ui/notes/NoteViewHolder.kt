@@ -9,7 +9,7 @@ import com.rg.headernotes.util.isElementNull
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class NoteViewHolder (private val binding: ItemNoteBinding, private val itemListener: ItemListener) : RecyclerView.ViewHolder(binding.root) {
+class NoteViewHolder (private val binding: ItemNoteBinding, private val itemListener: ItemListener?) : RecyclerView.ViewHolder(binding.root) {
     @SuppressLint("SimpleDateFormat")
     val format = SimpleDateFormat("dd.MM.yyyy HH:mm")
     @SuppressLint("SetTextI18n")
@@ -19,10 +19,10 @@ class NoteViewHolder (private val binding: ItemNoteBinding, private val itemList
         val time = if(model.noteDateTime.isElementNull()) "" else  format.format(Date(model.noteDateTime.toLong()))
         binding.textViewDateTime.text = time
         binding.noteItem.setOnClickListener {
-            itemListener.onItemClickListener(adapterPosition)
+            itemListener?.onItemClickListener(adapterPosition)
         }
         binding.noteItem.setOnLongClickListener {
-            itemListener.onLongItemClickListener(binding.root ,adapterPosition)
+            itemListener?.onLongItemClickListener(binding.root ,adapterPosition)
             true
         }
     }

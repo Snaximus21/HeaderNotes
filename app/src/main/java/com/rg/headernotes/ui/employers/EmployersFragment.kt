@@ -19,15 +19,20 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentEmployersBinding
 import com.rg.headernotes.models.EmployerModel
+import com.rg.headernotes.models.NoteModel
+import com.rg.headernotes.ui.employerDetail.EmployerDetailFragment
+import com.rg.headernotes.ui.notes.AddNoteFragment
+import com.rg.headernotes.util.ItemListener
+import com.rg.headernotes.util.RequestCodes
 import com.rg.headernotes.viewModels.EmployersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import com.rg.headernotes.util.UiState
 
 @AndroidEntryPoint
-class EmployersFragment : Fragment() {
+class EmployersFragment : Fragment(), ItemListener {
     private lateinit var binding: FragmentEmployersBinding
     private val viewModel by viewModels<EmployersViewModel>()
-    private val adapter by lazy { EmployerAdapter() }
+    private val adapter by lazy { EmployerAdapter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -214,5 +219,34 @@ class EmployersFragment : Fragment() {
                     .show()
             }
         }).attachToRecyclerView(recyclerView)
+
+        childFragmentManager.setFragmentResultListener(
+            RequestCodes.employerDetail,
+            viewLifecycleOwner
+        ) { requestKey, result ->
+            result.getParcelable(RequestCodes.employerEdit, EmployerModel::class.java)?.let {
+                viewModel.updateEmployer(it)
+            }
+            binding.coordinatorLayout.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onItemClickListener(position: Int) {
+        childFragmentManager.beginTransaction().apply {
+            replace(R.id.fragmentContainerEmployers, EmployerDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(
+                        RequestCodes.employerDetail,
+                        adapter.getEmployer(position)
+                    )
+                }
+            })
+            addToBackStack(null)
+            commit()
+        }
+        binding.coordinatorLayout.visibility = View.INVISIBLE
+    }
+
+    override fun onLongItemClickListener(view: View, position: Int) {
     }
 }

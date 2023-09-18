@@ -10,7 +10,7 @@ import com.rg.headernotes.ui.tasks.TaskViewHolder
 import com.rg.headernotes.util.ItemListener
 
 class TaskAdapter(
-    private val itemListener: ItemListener
+    private val itemListener: ItemListener?
 ) : RecyclerView.Adapter<TaskViewHolder>() {
     private var tasksList = emptyList<TaskModel>()
 

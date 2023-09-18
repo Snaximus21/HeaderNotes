@@ -4,9 +4,10 @@ import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.rg.headernotes.databinding.ItemEmployerBinding
 import com.rg.headernotes.models.EmployerModel
+import com.rg.headernotes.util.ItemListener
 import com.rg.headernotes.util.isElementNull
 
-class EmployerViewHolder(private val binding: ItemEmployerBinding) : ViewHolder(binding.root) {
+class EmployerViewHolder(private val binding: ItemEmployerBinding, private val itemListener: ItemListener?) : ViewHolder(binding.root) {
     @SuppressLint("SetTextI18n")
     fun bind(model: EmployerModel){
         binding.textViewName.text = model.fullName
@@ -20,5 +21,13 @@ class EmployerViewHolder(private val binding: ItemEmployerBinding) : ViewHolder(
             binding.textViewTasks.text = "Задачи: отсутствуют"
         else
             binding.textViewTasks.text = "Заметки: ${model.notesCount}"
+
+        binding.employerItem.setOnClickListener {
+            itemListener?.onItemClickListener(adapterPosition)
+        }
+        binding.employerItem.setOnLongClickListener {
+            itemListener?.onLongItemClickListener(binding.root ,adapterPosition)
+            true
+        }
     }
 }

@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.rg.headernotes.databinding.ItemEmployerBinding
 import com.rg.headernotes.models.EmployerModel
+import com.rg.headernotes.util.ItemListener
 
 
-class EmployerAdapter() : Adapter<EmployerViewHolder>() {
+class EmployerAdapter(private val itemListener: ItemListener?) : Adapter<EmployerViewHolder>() {
     private var employersList = emptyList<EmployerModel>()
 
     fun getEmployer(pos: Int) : EmployerModel {
@@ -46,7 +47,7 @@ class EmployerAdapter() : Adapter<EmployerViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployerViewHolder {
-        return EmployerViewHolder(ItemEmployerBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return EmployerViewHolder(ItemEmployerBinding.inflate(LayoutInflater.from(parent.context), parent, false), itemListener)
     }
 
     override fun onBindViewHolder(holder: EmployerViewHolder, position: Int) {

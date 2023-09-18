@@ -26,10 +26,10 @@ class EmployersViewModel @Inject constructor(private val repository: EmployersRe
 
     private val _update = MutableLiveData<UiState<String>>()
     val update: LiveData<UiState<String>> get() = _update
-    fun updateEmployer(employer: EmployerModel, employerName: String) {
+    fun updateEmployer(employer: EmployerModel) {
         _update.value = UiState.Loading
         viewModelScope.launch {
-            repository.updateEmployer(employer, employerName) {
+            repository.updateEmployer(employer) {
                 _update.value = it
             }
         }

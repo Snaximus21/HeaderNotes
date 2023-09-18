@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 
-class TaskViewHolder(private val binding: ItemTaskBinding, private val itemListener: ItemListener) :
+class TaskViewHolder(private val binding: ItemTaskBinding, private val itemListener: ItemListener?) :
     RecyclerView.ViewHolder(binding.root) {
     @SuppressLint("SimpleDateFormat")
     val format = SimpleDateFormat("dd.MM.yyyy HH:mm")
@@ -29,10 +29,10 @@ class TaskViewHolder(private val binding: ItemTaskBinding, private val itemListe
         binding.textViewDateTime.text = time
 
         binding.taskItem.setOnClickListener {
-            itemListener.onItemClickListener(adapterPosition)
+            itemListener?.onItemClickListener(adapterPosition)
         }
         binding.taskItem.setOnLongClickListener {
-            itemListener.onLongItemClickListener(binding.root, adapterPosition)
+            itemListener?.onLongItemClickListener(binding.root, adapterPosition)
             true
         }
     }
