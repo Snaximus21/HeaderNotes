@@ -1,4 +1,4 @@
-package com.rg.headernotes.ui.addUser
+package com.rg.headernotes.models
 
 data class UserModel (
     val name: String = "",

@@ -13,21 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.R
-import com.rg.headernotes.databinding.FragmentSettingsBinding
 import com.rg.headernotes.databinding.FragmentTasksBinding
-import com.rg.headernotes.ui.notes.AddNoteFragment
-import com.rg.headernotes.ui.notes.NoteAdapter
-import com.rg.headernotes.ui.notes.NoteModel
-import com.rg.headernotes.ui.notes.NotesViewModel
+import com.rg.headernotes.viewModels.TasksViewModel
 import com.rg.headernotes.util.ItemListener
 import com.rg.headernotes.util.RequestCodes
 import com.rg.headernotes.util.UiState
 import com.rg.headernotes.util.showPopupMenu
 import com.rg.headertasks.ui.tasks.TaskAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TasksFragment : Fragment(), ItemListener {

@@ -1,6 +1,6 @@
 package com.rg.headernotes.dao
 
-import com.rg.headernotes.ui.employers.EmployerModel
+import com.rg.headernotes.models.EmployerModel
 import com.rg.headernotes.util.UiState
 
 interface EmployersDao {

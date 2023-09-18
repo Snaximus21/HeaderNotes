@@ -15,6 +15,7 @@ import com.firebase.ui.auth.AuthUI.IdpConfig.GoogleBuilder
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAuthBinding
+import com.rg.headernotes.viewModels.AuthViewModel
 import com.rg.headernotes.util.GraphActions
 import com.rg.headernotes.util.UiState
 import com.rg.headernotes.util.isElementNull

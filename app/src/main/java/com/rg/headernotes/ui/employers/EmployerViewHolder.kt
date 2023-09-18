@@ -3,6 +3,7 @@ package com.rg.headernotes.ui.employers
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.rg.headernotes.databinding.ItemEmployerBinding
+import com.rg.headernotes.models.EmployerModel
 import com.rg.headernotes.util.isElementNull
 
 class EmployerViewHolder(private val binding: ItemEmployerBinding) : ViewHolder(binding.root) {

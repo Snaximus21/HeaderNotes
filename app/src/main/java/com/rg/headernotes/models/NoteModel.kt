@@ -1,4 +1,4 @@
-package com.rg.headernotes.ui.notes
+package com.rg.headernotes.models
 
 import android.os.Parcel
 import android.os.Parcelable

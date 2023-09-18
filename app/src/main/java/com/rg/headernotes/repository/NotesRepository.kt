@@ -2,10 +2,8 @@ package com.rg.headernotes.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.rg.headernotes.dao.NotesDao
-import com.rg.headernotes.ui.employers.EmployerModel
-import com.rg.headernotes.ui.notes.NoteModel
+import com.rg.headernotes.models.NoteModel
 import com.rg.headernotes.util.FireStoreTables
 import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState

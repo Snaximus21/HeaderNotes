@@ -1,10 +1,11 @@
-package com.rg.headernotes.ui.notes
+package com.rg.headernotes.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rg.headernotes.repository.NotesRepository
+import com.rg.headernotes.models.NoteModel
 import com.rg.headernotes.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

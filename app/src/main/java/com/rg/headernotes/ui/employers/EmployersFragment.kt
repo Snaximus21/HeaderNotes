@@ -5,12 +5,9 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.MenuRes
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -21,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentEmployersBinding
+import com.rg.headernotes.models.EmployerModel
+import com.rg.headernotes.viewModels.EmployersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import com.rg.headernotes.util.UiState
 

@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentNotesBinding
+import com.rg.headernotes.models.NoteModel
+import com.rg.headernotes.viewModels.NotesViewModel
 import com.rg.headernotes.util.ItemListener
 import com.rg.headernotes.util.RequestCodes
 import com.rg.headernotes.util.UiState

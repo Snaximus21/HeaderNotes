@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAddNoteBinding
+import com.rg.headernotes.models.NoteModel
 import com.rg.headernotes.util.RequestCodes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +21,7 @@ import java.util.Date
 
 class AddNoteFragment : Fragment() {
     private lateinit var binding: FragmentAddNoteBinding
-    private var model: NoteModel ?= null
+    private var model: NoteModel?= null
 
     @SuppressLint("SimpleDateFormat")
     val format = SimpleDateFormat("dd.MM.yyyy HH:mm")

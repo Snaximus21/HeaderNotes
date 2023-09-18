@@ -3,7 +3,7 @@ package com.rg.headernotes.repository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.rg.headernotes.dao.EmployersDao
-import com.rg.headernotes.ui.employers.EmployerModel
+import com.rg.headernotes.models.EmployerModel
 import com.rg.headernotes.util.FireStoreTables
 import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState

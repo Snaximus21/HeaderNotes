@@ -12,7 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentMainBinding
 import com.rg.headernotes.databinding.HeaderNavigationBinding
-import com.rg.headernotes.ui.auth.AuthViewModel
+import com.rg.headernotes.viewModels.AuthViewModel
 import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState
 import com.rg.headernotes.util.showSnackbar

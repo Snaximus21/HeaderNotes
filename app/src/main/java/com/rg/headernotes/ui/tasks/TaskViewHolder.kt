@@ -3,12 +3,9 @@ package com.rg.headernotes.ui.tasks
 import android.annotation.SuppressLint
 import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
-import com.rg.headernotes.databinding.ItemNoteBinding
 import com.rg.headernotes.databinding.ItemTaskBinding
-import com.rg.headernotes.ui.notes.NoteModel
 import com.rg.headernotes.util.ItemListener
 import com.rg.headernotes.util.isElementNull
-import java.lang.Math.abs
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date

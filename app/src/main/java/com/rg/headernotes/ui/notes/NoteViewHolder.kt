@@ -3,6 +3,7 @@ package com.rg.headernotes.ui.notes
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import com.rg.headernotes.databinding.ItemNoteBinding
+import com.rg.headernotes.models.NoteModel
 import com.rg.headernotes.util.ItemListener
 import com.rg.headernotes.util.isElementNull
 import java.text.SimpleDateFormat

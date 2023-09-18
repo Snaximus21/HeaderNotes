@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAddUserBinding
+import com.rg.headernotes.models.UserModel
+import com.rg.headernotes.viewModels.UserViewModel
 import com.rg.headernotes.util.GraphActions
 import com.rg.headernotes.util.UiState
 import com.rg.headernotes.util.navigate

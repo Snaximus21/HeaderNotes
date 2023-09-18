@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAddTaskBinding
-import com.rg.headernotes.ui.notes.NoteModel
 import com.rg.headernotes.util.RequestCodes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope

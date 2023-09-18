@@ -1,9 +1,10 @@
-package com.rg.headernotes.ui.addUser
+package com.rg.headernotes.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rg.headernotes.repository.UserRepository
+import com.rg.headernotes.models.UserModel
 import com.rg.headernotes.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

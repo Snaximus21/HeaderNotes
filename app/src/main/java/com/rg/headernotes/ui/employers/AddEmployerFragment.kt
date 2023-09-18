@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAddEmployerBinding
+import com.rg.headernotes.models.EmployerModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

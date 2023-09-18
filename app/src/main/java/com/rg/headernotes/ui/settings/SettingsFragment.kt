@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.databinding.FragmentSettingsBinding
 import com.jakewharton.processphoenix.ProcessPhoenix
-import com.rg.headernotes.ui.addUser.UserViewModel
+import com.rg.headernotes.viewModels.UserViewModel
 import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState
 import com.rg.headernotes.util.getAppTheme

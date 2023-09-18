@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rg.headernotes.databinding.ItemNoteBinding
+import com.rg.headernotes.models.NoteModel
 import com.rg.headernotes.util.ItemListener
 
 class NoteAdapter(private val itemListener: ItemListener) : RecyclerView.Adapter<NoteViewHolder>() {

@@ -1,10 +1,11 @@
-package com.rg.headernotes.ui.employers
+package com.rg.headernotes.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rg.headernotes.repository.EmployersRepository
+import com.rg.headernotes.models.EmployerModel
 import com.rg.headernotes.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

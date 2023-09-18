@@ -1,6 +1,6 @@
 package com.rg.headernotes.dao
 
-import com.rg.headernotes.ui.notes.NoteModel
+import com.rg.headernotes.models.NoteModel
 import com.rg.headernotes.util.UiState
 
 interface NotesDao {
