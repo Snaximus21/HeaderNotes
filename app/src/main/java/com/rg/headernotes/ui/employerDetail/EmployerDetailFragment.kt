@@ -13,12 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentEmployerDetailBinding
 import com.rg.headernotes.models.EmployerModel
+import com.rg.headernotes.models.NoteModel
+import com.rg.headernotes.ui.notes.AddNoteFragment
 import com.rg.headernotes.ui.notes.NoteAdapter
+import com.rg.headernotes.ui.tasks.AddTaskFragment
 import com.rg.headernotes.ui.tasks.TaskModel
 import com.rg.headernotes.util.RequestCodes
 import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState
 import com.rg.headernotes.util.setAppTheme
+import com.rg.headernotes.viewModels.EmployersViewModel
 import com.rg.headernotes.viewModels.NotesViewModel
 import com.rg.headernotes.viewModels.TasksViewModel
 import com.rg.headertasks.ui.tasks.TaskAdapter
@@ -34,8 +38,7 @@ class EmployerDetailFragment : Fragment() {
     private var model: EmployerModel? = null
     private val adapterNotes by lazy { NoteAdapter(null) }
     private val adapterTasks by lazy { TaskAdapter(null) }
-    private val viewModelTasks by viewModels<TasksViewModel>()
-    private val viewModelNotes by viewModels<NotesViewModel>()
+    private val viewModel by viewModels<EmployersViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,7 +109,9 @@ class EmployerDetailFragment : Fragment() {
                     val employer = EmployerModel(
                         fullName = binding.editTextName.text.toString(),
                         job = binding.editTextSpecies.text.toString(),
-                        age = binding.editTextAge.text.toString()
+                        age = binding.editTextAge.text.toString(),
+                        notesCount = adapterNotes.itemCount.toString(),
+                        tasksCount = adapterTasks.itemCount.toString()
                     )
                     CoroutineScope(Dispatchers.Main).launch {
                         model?.let {
@@ -128,40 +133,147 @@ class EmployerDetailFragment : Fragment() {
             }
         }
 
-
-
-        viewModelTasks.getAllTasks()
-        viewModelTasks.allTasks.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is UiState.Loading -> {
-                }
-
-                is UiState.Success -> {
-                    adapterTasks.setTasks(state.data)
-                    recyclerView.resetPivot()
-                }
-
-                is UiState.Failure -> {
-
-                }
+        binding.floatingActionButton.setOnClickListener {
+            childFragmentManager.beginTransaction().apply {
+                replace(R.id.fragmentContainerEmployerDetail, when(recyclerView.adapter){
+                    adapterTasks -> {
+                        AddTaskFragment()
+                    }
+                    else -> {
+                        AddNoteFragment()
+                    }
+                }.apply {
+                    arguments = Bundle().apply {
+                        putBoolean(RequestCodes.employerDetail, true)
+                    }
+                })
+                addToBackStack(null)
+                commit()
             }
+            binding.coordinatorLayout.visibility = View.INVISIBLE
         }
 
-        viewModelNotes.getAllNotes()
-        viewModelNotes.allNotes.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is UiState.Loading -> {
+        model?.let { employerModel ->
+            viewModel.getAllNotes(employerModel)
+            viewModel.allNotes.observe(viewLifecycleOwner) { state ->
+                when (state) {
+                    is UiState.Loading -> {
 
+                    }
+
+                    is UiState.Success -> {
+                        adapterNotes.setNotes(state.data)
+                        recyclerView.resetPivot()
+                    }
+
+                    is UiState.Failure -> {
+
+                    }
                 }
+            }
 
-                is UiState.Success -> {
-                    adapterNotes.setNotes(state.data)
-                    recyclerView.resetPivot()
+            viewModel.newNote.observe(viewLifecycleOwner) {
+                when (it) {
+                    is UiState.Loading -> {
+                        binding.progressBarLoading.visibility = View.VISIBLE
+                    }
+
+                    is UiState.Success -> {
+                        binding.progressBarLoading.visibility = View.INVISIBLE
+                        adapterNotes.addNote(listOf(it.data))
+                        binding.textViewListIsEmpty.visibility = if(adapterNotes.itemCount > 0) View.INVISIBLE else View.VISIBLE
+                    }
+
+                    is UiState.Failure -> {
+                        binding.progressBarLoading.visibility = View.INVISIBLE
+                    }
                 }
+            }
+            viewModel.updateNote.observe(viewLifecycleOwner) {
+                when (it) {
+                    is UiState.Loading -> {
+                        binding.progressBarLoading.visibility = View.VISIBLE
+                    }
 
-                is UiState.Failure -> {
+                    is UiState.Success -> {
+                        viewModel.getAllNotes(employerModel)
+                    }
 
+                    is UiState.Failure -> {
+                        binding.progressBarLoading.visibility = View.INVISIBLE
+                    }
                 }
+            }
+
+            viewModel.getAllTasks(employerModel)
+            viewModel.allTasks.observe(viewLifecycleOwner) { state ->
+                when (state) {
+                    is UiState.Loading -> {
+                    }
+
+                    is UiState.Success -> {
+                        adapterTasks.setTasks(state.data)
+                        recyclerView.resetPivot()
+                    }
+
+                    is UiState.Failure -> {
+
+                    }
+                }
+            }
+
+            viewModel.updateTask.observe(viewLifecycleOwner) {
+                when (it) {
+                    is UiState.Loading -> {
+                        binding.progressBarLoading.visibility = View.VISIBLE
+                    }
+
+                    is UiState.Success -> {
+                        viewModel.getAllTasks(employerModel)
+                        binding.textViewListIsEmpty.visibility = if(adapterTasks.itemCount > 0) View.INVISIBLE else View.VISIBLE
+                    }
+
+                    is UiState.Failure -> {
+                        binding.progressBarLoading.visibility = View.INVISIBLE
+                    }
+                }
+            }
+
+            viewModel.newTask.observe(viewLifecycleOwner) {
+                when (it) {
+                    is UiState.Loading -> {
+                        binding.progressBarLoading.visibility = View.VISIBLE
+                    }
+
+                    is UiState.Success -> {
+                        binding.progressBarLoading.visibility = View.INVISIBLE
+                        adapterTasks.addTask(listOf(it.data))
+                        binding.textViewListIsEmpty.visibility = if(adapterTasks.itemCount > 0) View.INVISIBLE else View.VISIBLE
+                    }
+
+                    is UiState.Failure -> {
+                        binding.progressBarLoading.visibility = View.INVISIBLE
+                    }
+                }
+            }
+
+            childFragmentManager.setFragmentResultListener(
+                RequestCodes.employerDetail,
+                viewLifecycleOwner
+            ) { requestKey, result ->
+                result.getParcelable(RequestCodes.newNote, NoteModel::class.java)?.let { note ->
+                    viewModel.newNote(employerModel ,note)
+                }
+                result.getParcelable(RequestCodes.editNote, NoteModel::class.java)?.let { note ->
+                    viewModel.updateNote(employerModel, note)
+                }
+                result.getParcelable(RequestCodes.newTask, TaskModel::class.java)?.let { task ->
+                    viewModel.newTask(employerModel ,task)
+                }
+                result.getParcelable(RequestCodes.editTask, TaskModel::class.java)?.let { task ->
+                    viewModel.updateTask(employerModel, task)
+                }
+                binding.coordinatorLayout.visibility = View.VISIBLE
             }
         }
     }

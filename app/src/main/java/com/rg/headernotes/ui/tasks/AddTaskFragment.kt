@@ -25,6 +25,7 @@ class AddTaskFragment : Fragment() {
     private lateinit var binding: FragmentAddTaskBinding
     private var model: TaskModel? = null
     private var pickerTime: Long ?= null
+    private var isEmployer: Boolean = false
 
     @SuppressLint("SimpleDateFormat")
     val format = SimpleDateFormat("dd.MM.yyyy")
@@ -48,6 +49,8 @@ class AddTaskFragment : Fragment() {
             binding.editTextTitle.setText(it.taskNote)
             binding.buttonDate.text = format.format(Date(it.taskDate.toLong()))
         }
+
+        isEmployer = arguments?.getBoolean(RequestCodes.employerDetail) == true
 
         binding.buttonBack.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
@@ -85,11 +88,11 @@ class AddTaskFragment : Fragment() {
                     )
                     CoroutineScope(Dispatchers.Main).launch {
                         model?.let {
-                            parentFragmentManager.setFragmentResult(RequestCodes.setTask, Bundle().apply {
+                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.employerDetail else RequestCodes.setTask, Bundle().apply {
                                 putParcelable(RequestCodes.editTask, task)
                             })
                         } ?: run{
-                            parentFragmentManager.setFragmentResult(RequestCodes.setTask, Bundle().apply {
+                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.employerDetail else RequestCodes.setTask, Bundle().apply {
                                 putParcelable(RequestCodes.newTask, task)
                             })
                         }

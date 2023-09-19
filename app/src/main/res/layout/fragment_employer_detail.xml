@@ -6,129 +6,186 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonBack"
-        style="@style/Widget.Material3.Button.IconButton.Filled"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/back_button"
-        android:textColor="@color/white"
-        app:backgroundTint="@color/fab"
-        app:icon="@drawable/icon_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonApply"
-        style="@style/Widget.Material3.Button.IconButton.Filled"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/apply_button"
-        android:textColor="@color/white"
-        app:icon="@drawable/icon_done"
-        app:iconTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonBack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonBack" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/name_employer"
-        app:layout_constraintEnd_toEndOf="@+id/buttonApply"
-        app:layout_constraintStart_toStartOf="@+id/buttonBack"
-        app:layout_constraintTop_toBottomOf="@+id/buttonApply">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldSpecies"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:hint="@string/species"
-        app:layout_constraintEnd_toEndOf="@+id/buttonApply"
-        app:layout_constraintStart_toStartOf="@+id/buttonBack"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldName">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextSpecies"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldAge"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:hint="@string/title_age"
-        app:layout_constraintEnd_toEndOf="@+id/buttonApply"
-        app:layout_constraintStart_toStartOf="@+id/buttonBack"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldSpecies">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextAge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleButtonGroup"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:checkedButton="@+id/buttonTasks"
-        app:layout_constraintEnd_toEndOf="@+id/buttonApply"
-        app:layout_constraintStart_toStartOf="@+id/buttonBack"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldAge"
-        app:selectionRequired="true"
-        app:singleSelection="true">
-
-        <Button
-            android:id="@+id/buttonTasks"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/menu_tasks"
-            app:icon="@drawable/icon_tasks" />
-
-        <Button
-            android:id="@+id/buttonNotes"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/menu_notes"
-            app:icon="@drawable/icon_notes" />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="2dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/buttonApply"
-        app:layout_constraintStart_toStartOf="@id/buttonBack"
-        app:layout_constraintTop_toBottomOf="@id/toggleButtonGroup"
-        tools:itemCount="100"
-        tools:listitem="@layout/item_note" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonBack"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/back_button"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/fab"
+                app:icon="@drawable/icon_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonApply"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/apply_button"
+                android:textColor="@color/white"
+                app:icon="@drawable/icon_done"
+                app:iconTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonBack"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/buttonBack" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/name_employer"
+                app:layout_constraintEnd_toEndOf="@+id/buttonApply"
+                app:layout_constraintStart_toStartOf="@+id/buttonBack"
+                app:layout_constraintTop_toBottomOf="@+id/buttonApply">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldSpecies"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:hint="@string/species"
+                app:layout_constraintEnd_toEndOf="@+id/buttonApply"
+                app:layout_constraintStart_toStartOf="@+id/buttonBack"
+                app:layout_constraintTop_toBottomOf="@+id/textFieldName">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextSpecies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldAge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:hint="@string/title_age"
+                app:layout_constraintEnd_toEndOf="@+id/buttonApply"
+                app:layout_constraintStart_toStartOf="@+id/buttonBack"
+                app:layout_constraintTop_toBottomOf="@+id/textFieldSpecies">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextAge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleButtonGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:checkedButton="@+id/buttonTasks"
+                app:layout_constraintEnd_toEndOf="@+id/buttonApply"
+                app:layout_constraintStart_toStartOf="@+id/buttonBack"
+                app:layout_constraintTop_toBottomOf="@+id/textFieldAge"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <Button
+                    android:id="@+id/buttonTasks"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/menu_tasks"
+                    app:icon="@drawable/icon_tasks" />
+
+                <Button
+                    android:id="@+id/buttonNotes"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/menu_notes"
+                    app:icon="@drawable/icon_notes" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/buttonApply"
+                app:layout_constraintStart_toStartOf="@id/buttonBack"
+                app:layout_constraintTop_toBottomOf="@id/toggleButtonGroup"
+                tools:itemCount="100"
+                tools:listitem="@layout/item_note" />
+
+            <TextView
+                android:id="@+id/textViewListIsEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/list_empty"
+                android:gravity="center"
+                android:textSize="26sp"
+                android:layout_gravity="center"
+                app:layout_constraintTop_toTopOf="@+id/recyclerView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/fab"
+            app:srcCompat="@drawable/icon_add"
+            app:fabSize="mini"/>
+
+        <ProgressBar
+            android:id="@+id/progressBarLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerEmployerDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -10,7 +10,10 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 
-class TaskViewHolder(private val binding: ItemTaskBinding, private val itemListener: ItemListener?) :
+class TaskViewHolder(
+    private val binding: ItemTaskBinding,
+    private val itemListener: ItemListener?
+) :
     RecyclerView.ViewHolder(binding.root) {
     @SuppressLint("SimpleDateFormat")
     val format = SimpleDateFormat("dd.MM.yyyy HH:mm")
@@ -20,13 +23,17 @@ class TaskViewHolder(private val binding: ItemTaskBinding, private val itemListe
         binding.textViewTitle.text = model.taskName
         binding.textViewTask.text = model.taskNote
 
-        val time = if (model.taskDate.isElementNull()) "" else format.format(Date(model.taskDate.toLong()))
-        val timeLow = (model.taskDate.toLong() - Calendar.getInstance().timeInMillis) < 86400000
-        if (timeLow) {
-            binding.imageViewTask.setColorFilter(Color.RED)
-        }
+        val time = if (model.taskDate.isElementNull())
+            Calendar.getInstance().timeInMillis
+         else
+            model.taskDate.toLong()
 
-        binding.textViewDateTime.text = time
+
+        val timeLow = (time - Calendar.getInstance().timeInMillis) < 86400000
+        if (timeLow)
+            binding.imageViewTask.setColorFilter(Color.RED)
+
+        binding.textViewDateTime.text = format.format(Date(time))
 
         binding.taskItem.setOnClickListener {
             itemListener?.onItemClickListener(adapterPosition)

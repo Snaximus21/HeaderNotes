@@ -20,7 +20,7 @@ class EmployerViewHolder(private val binding: ItemEmployerBinding, private val i
         if(model.tasksCount.isElementNull())//Todo доделать
             binding.textViewTasks.text = "Задачи: отсутствуют"
         else
-            binding.textViewTasks.text = "Заметки: ${model.notesCount}"
+            binding.textViewTasks.text = "Задачи: ${model.tasksCount}"
 
         binding.employerItem.setOnClickListener {
             itemListener?.onItemClickListener(adapterPosition)

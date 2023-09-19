@@ -7,6 +7,7 @@ import com.rg.headernotes.models.NoteModel
 import com.rg.headernotes.util.ItemListener
 import com.rg.headernotes.util.isElementNull
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 
 class NoteViewHolder (private val binding: ItemNoteBinding, private val itemListener: ItemListener?) : RecyclerView.ViewHolder(binding.root) {
@@ -16,8 +17,13 @@ class NoteViewHolder (private val binding: ItemNoteBinding, private val itemList
     fun bind(model: NoteModel){
         binding.textViewTitle.text = model.noteTitle
         binding.textViewSubTitle.text = model.noteSubTitle
-        val time = if(model.noteDateTime.isElementNull()) "" else  format.format(Date(model.noteDateTime.toLong()))
-        binding.textViewDateTime.text = time
+
+        val time = if (model.noteDateTime.isElementNull())
+            Calendar.getInstance().timeInMillis
+        else
+            model.noteDateTime.toLong()
+
+        binding.textViewDateTime.text = format.format(Date(time))
         binding.noteItem.setOnClickListener {
             itemListener?.onItemClickListener(adapterPosition)
         }

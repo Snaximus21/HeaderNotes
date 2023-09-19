@@ -22,6 +22,7 @@ import java.util.Date
 class AddNoteFragment : Fragment() {
     private lateinit var binding: FragmentAddNoteBinding
     private var model: NoteModel?= null
+    private var isEmployer: Boolean = false
 
     @SuppressLint("SimpleDateFormat")
     val format = SimpleDateFormat("dd.MM.yyyy HH:mm")
@@ -49,6 +50,8 @@ class AddNoteFragment : Fragment() {
             binding.textViewDateTime.text = format.format(Date(it.noteDateTime.toLong()))
         }
 
+        isEmployer = arguments?.getBoolean(RequestCodes.employerDetail) == true
+
         binding.buttonBack.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 parentFragmentManager.setFragmentResult(RequestCodes.setNote, Bundle())
@@ -70,11 +73,11 @@ class AddNoteFragment : Fragment() {
                     )
                     CoroutineScope(Dispatchers.Main).launch {
                         model?.let {
-                            parentFragmentManager.setFragmentResult(RequestCodes.setNote, Bundle().apply {
+                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.employerDetail else RequestCodes.setNote, Bundle().apply {
                                 putParcelable(RequestCodes.editNote, note)
                             })
                         } ?: run{
-                            parentFragmentManager.setFragmentResult(RequestCodes.setNote, Bundle().apply {
+                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.employerDetail else RequestCodes.setNote, Bundle().apply {
                                 putParcelable(RequestCodes.newNote, note)
                             })
                         }

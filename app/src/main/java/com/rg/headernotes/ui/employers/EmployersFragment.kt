@@ -128,6 +128,23 @@ class EmployersFragment : Fragment(), ItemListener {
             }
         }
 
+        viewModel.update.observe(viewLifecycleOwner) {
+            when (it) {
+                is UiState.Loading -> {
+                    binding.progressBarLoading.visibility = View.VISIBLE
+                }
+
+                is UiState.Success -> {
+                    viewModel.getAllEmployers()
+                    binding.textViewListIsEmpty.visibility = if(adapter.itemCount > 0) View.INVISIBLE else View.VISIBLE
+                }
+
+                is UiState.Failure -> {
+                    binding.progressBarLoading.visibility = View.INVISIBLE
+                }
+            }
+        }
+
         childFragmentManager.setFragmentResultListener(
             "newEmployer",
             viewLifecycleOwner

@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rg.headernotes.repository.EmployersRepository
 import com.rg.headernotes.models.EmployerModel
+import com.rg.headernotes.models.NoteModel
+import com.rg.headernotes.ui.tasks.TaskModel
 import com.rg.headernotes.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -52,6 +54,88 @@ class EmployersViewModel @Inject constructor(private val repository: EmployersRe
         _newEmployer.value = UiState.Loading
         repository.addEmployer(employer, employer.fullName) {
             _newEmployer.value = it
+        }
+    }
+
+    private val _allNotes = MutableLiveData<UiState<List<NoteModel>>>()
+    val allNotes: LiveData<UiState<List<NoteModel>>> get() = _allNotes
+
+    fun getAllNotes(employer: EmployerModel) {
+        _allNotes.value = UiState.Loading
+        repository.getAllNotes(employer) {
+            _allNotes.value = it
+        }
+    }
+
+    private val _updateNote = MutableLiveData<UiState<String>>()
+    val updateNote: LiveData<UiState<String>> get() = _updateNote
+    fun updateNote(employer: EmployerModel, note: NoteModel) {
+        _updateNote.value = UiState.Loading
+        viewModelScope.launch {
+            repository.updateNote(employer, note) {
+                _updateNote.value = it
+            }
+        }
+    }
+
+    private val _deleteNote = MutableLiveData<UiState<String>>()
+    val deleteNote: LiveData<UiState<String>> get() = _deleteNote
+    fun deleteNote(employer: EmployerModel, note: NoteModel) {
+        _deleteNote.value = UiState.Loading
+        viewModelScope.launch {
+            repository.deleteNote(employer, note) {
+                _deleteNote.value = it
+            }
+        }
+    }
+
+    private val _newNote = MutableLiveData<UiState<NoteModel>>()
+    val newNote: LiveData<UiState<NoteModel>> get() = _newNote
+    fun newNote(employer: EmployerModel,note: NoteModel) {
+        _newNote.value = UiState.Loading
+        repository.addNote(employer, note) {
+            _newNote.value = it
+        }
+    }
+
+    private val _allTasks = MutableLiveData<UiState<List<TaskModel>>>()
+    val allTasks: LiveData<UiState<List<TaskModel>>> get() = _allTasks
+
+    fun getAllTasks(employer: EmployerModel) {
+        _allTasks.value = UiState.Loading
+        repository.getAllTasks(employer) {
+            _allTasks.value = it
+        }
+    }
+
+    private val _updateTask = MutableLiveData<UiState<String>>()
+    val updateTask: LiveData<UiState<String>> get() = _updateTask
+    fun updateTask(employer: EmployerModel, note: TaskModel) {
+        _updateTask.value = UiState.Loading
+        viewModelScope.launch {
+            repository.updateTask(employer, note) {
+                _updateTask.value = it
+            }
+        }
+    }
+
+    private val _deleteTask = MutableLiveData<UiState<String>>()
+    val deleteTask: LiveData<UiState<String>> get() = _deleteTask
+    fun deleteTask(employer: EmployerModel, note: TaskModel) {
+        _deleteTask.value = UiState.Loading
+        viewModelScope.launch {
+            repository.deleteTask(employer, note) {
+                _deleteTask.value = it
+            }
+        }
+    }
+
+    private val _newTask = MutableLiveData<UiState<TaskModel>>()
+    val newTask: LiveData<UiState<TaskModel>> get() = _newTask
+    fun newTask(employer: EmployerModel, note: TaskModel) {
+        _newTask.value = UiState.Loading
+        repository.addTask(employer, note) {
+            _newTask.value = it
         }
     }
 }
