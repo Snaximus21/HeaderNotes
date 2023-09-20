@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAddNoteBinding
 import com.rg.headernotes.models.NoteModel
+import com.rg.headernotes.util.DateTimeConverter.currentDateTimeMillis
+import com.rg.headernotes.util.DateTimeConverter.toDateTime
 import com.rg.headernotes.util.RequestCodes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,14 +42,14 @@ class AddNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val initTime = Calendar.getInstance().timeInMillis
-        binding.textViewDateTime.text = format.format(Date(initTime))
+        val initTime = currentDateTimeMillis()
+        binding.textViewDateTime.text = initTime.toDateTime()
 
         arguments?.getParcelable(RequestCodes.editNote, NoteModel::class.java)?.let {
             model = it
             binding.editTextNoteTitle.setText(it.noteTitle)
             binding.editTextSubTitle.setText(it.noteSubTitle)
-            binding.textViewDateTime.text = format.format(Date(it.noteDateTime.toLong()))
+            binding.textViewDateTime.text = it.noteDateTime.toLong().toDateTime()
         }
 
         isEmployer = arguments?.getBoolean(RequestCodes.employerEdit) == true
@@ -67,6 +69,7 @@ class AddNoteFragment : Fragment() {
                 }
                 else -> {
                     val note =  NoteModel(
+                        id = model?.id.toString(),
                         noteTitle = binding.editTextNoteTitle.text.toString(),
                         noteSubTitle = binding.editTextSubTitle.text.toString(),
                         noteDateTime = initTime.toString()

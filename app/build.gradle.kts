@@ -6,6 +6,7 @@ plugins {
     id ("androidx.navigation.safeargs.kotlin")
     id ("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -61,7 +62,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    implementation ("androidx.preference:preference:1.2.1")
+    implementation ("androidx.preference:preference-ktx:1.2.1")
 
     //Navigation
     val navigationVersion = "2.7.2"
@@ -79,6 +80,8 @@ dependencies {
     implementation (platform("com.google.firebase:firebase-auth:21.1.0"))
     implementation ("com.google.firebase:firebase-auth")
     implementation ("com.firebaseui:firebase-ui-auth:8.0.2")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
     // Hilt
     val hiltVersion = "2.48"

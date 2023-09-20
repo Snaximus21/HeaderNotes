@@ -82,18 +82,6 @@ class TasksFragment : Fragment(), ItemListener {
             binding.coordinatorLayout.visibility = View.INVISIBLE
         }
 
-        childFragmentManager.setFragmentResultListener(
-            RequestCodes.setTask,
-            viewLifecycleOwner
-        ) { _, result ->
-            result.getParcelable(RequestCodes.newTask, TaskModel::class.java)?.let {
-                val outModel = it.copy(id = adapter.itemCount.toString())
-                viewModel.newTask(outModel)
-            }
-
-            binding.coordinatorLayout.visibility = View.VISIBLE
-        }
-
         viewModel.getAllTasks()
         viewModel.allTasks.observe(viewLifecycleOwner) { state ->
             when (state) {

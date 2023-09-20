@@ -12,6 +12,9 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAddTaskBinding
 import com.rg.headernotes.models.TaskModel
+import com.rg.headernotes.util.DateTimeConverter.currentDateTimeMillis
+import com.rg.headernotes.util.DateTimeConverter.toDate
+import com.rg.headernotes.util.DateTimeConverter.toDateTime
 import com.rg.headernotes.util.RequestCodes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -25,7 +28,7 @@ import java.util.Date
 class AddTaskFragment : Fragment() {
     private lateinit var binding: FragmentAddTaskBinding
     private var model: TaskModel? = null
-    private var pickerTime: Long ?= null
+    private var pickerTime: Long? = null
     private var isEmployer: Boolean = false
 
     @SuppressLint("SimpleDateFormat")
@@ -48,7 +51,7 @@ class AddTaskFragment : Fragment() {
             model = it
             binding.editTextTaskName.setText(it.taskName)
             binding.editTextTitle.setText(it.taskNote)
-            binding.buttonDate.text = format.format(Date(it.taskDate.toLong()))
+            binding.buttonDate.text = it.taskDate.toLong().toDate()
         }
 
         isEmployer = arguments?.getBoolean(RequestCodes.employerEdit) == true
@@ -63,7 +66,12 @@ class AddTaskFragment : Fragment() {
         binding.buttonDate.setOnClickListener {
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Крайний срок")
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .setSelection(
+                    when {
+                        model != null -> model?.taskDate?.toLong()
+                        else -> currentDateTimeMillis()
+                    }
+                )
                 .build().apply {
                     addOnPositiveButtonClickListener {
                         binding.buttonDate.text = format.format(Date(it))
@@ -83,19 +91,29 @@ class AddTaskFragment : Fragment() {
 
                 else -> {
                     val task = TaskModel(
+                        id = model?.id.toString(),
                         taskName = binding.editTextTaskName.text.toString(),
                         taskNote = binding.editTextTitle.text.toString(),
-                        taskDate = if(pickerTime != null) pickerTime.toString() else  Calendar.getInstance().timeInMillis.toString()
+                        taskDate = when {
+                            pickerTime != null -> pickerTime.toString()
+                            model != null -> model?.taskDate.toString()
+                            else -> currentDateTimeMillis().toString()
+                        }
                     )
+
                     CoroutineScope(Dispatchers.Main).launch {
                         model?.let {
-                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.setEmployer else RequestCodes.setTask, Bundle().apply {
-                                putParcelable(RequestCodes.editTask, task)
-                            })
-                        } ?: run{
-                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.setEmployer else RequestCodes.setTask, Bundle().apply {
-                                putParcelable(RequestCodes.newTask, task)
-                            })
+                            parentFragmentManager.setFragmentResult(
+                                if (isEmployer) RequestCodes.setEmployer else RequestCodes.setTask,
+                                Bundle().apply {
+                                    putParcelable(RequestCodes.editTask, task)
+                                })
+                        } ?: run {
+                            parentFragmentManager.setFragmentResult(
+                                if (isEmployer) RequestCodes.setEmployer else RequestCodes.setTask,
+                                Bundle().apply {
+                                    putParcelable(RequestCodes.newTask, task)
+                                })
                         }
                         parentFragmentManager.popBackStack()
                     }

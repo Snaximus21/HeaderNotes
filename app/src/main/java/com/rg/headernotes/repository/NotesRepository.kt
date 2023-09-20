@@ -21,6 +21,7 @@ class NotesRepository @Inject constructor(private val database: FirebaseFirestor
                 .addOnSuccessListener {
                     for (document in it) {
                         notes += NoteModel(
+                            document.data["id"].toString(),
                             document.data["noteTitle"].toString(),
                             document.data["noteSubTitle"].toString(),
                             document.data["noteDateTime"].toString()

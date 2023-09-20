@@ -38,12 +38,12 @@ class UserRepository @Inject constructor(private val dataBase: FirebaseFirestore
                             .collection(FireStoreTables.USER)
                             .document(user.uid)
                             .collection(FireStoreTables.EMPLOYERS)
-                            .document(employer.data["fullName"].toString())
+                            .document(employer.data["id"].toString())
                             .delete()
                     }
                 }
                 .addOnFailureListener {
-
+                    result.invoke(UiState.Failure(Strings.ERROR))
                 }
 
             dataBase
@@ -51,18 +51,18 @@ class UserRepository @Inject constructor(private val dataBase: FirebaseFirestore
                 .document(user.uid)
                 .collection(FireStoreTables.TASKS)
                 .get()
-                .addOnSuccessListener { employers ->
-                    for (employer in employers) {
+                .addOnSuccessListener { tasks ->
+                    for (task in tasks) {
                         dataBase
                             .collection(FireStoreTables.USER)
                             .document(user.uid)
                             .collection(FireStoreTables.TASKS)
-                            .document(employer.data["taskName"].toString())
+                            .document(task.data["id"].toString())
                             .delete()
                     }
                 }
                 .addOnFailureListener {
-
+                    result.invoke(UiState.Failure(Strings.ERROR))
                 }
 
             dataBase
@@ -70,18 +70,18 @@ class UserRepository @Inject constructor(private val dataBase: FirebaseFirestore
                 .document(user.uid)
                 .collection(FireStoreTables.NOTES)
                 .get()
-                .addOnSuccessListener { employers ->
-                    for (employer in employers) {
+                .addOnSuccessListener { notes ->
+                    for (note in notes) {
                         dataBase
                             .collection(FireStoreTables.USER)
                             .document(user.uid)
                             .collection(FireStoreTables.NOTES)
-                            .document(employer.data["noteTitle"].toString())
+                            .document(note.data["id"].toString())
                             .delete()
                     }
                 }
                 .addOnFailureListener {
-
+                    result.invoke(UiState.Failure(Strings.ERROR))
                 }
 
             dataBase
