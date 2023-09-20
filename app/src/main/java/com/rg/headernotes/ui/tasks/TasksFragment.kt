@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentTasksBinding
+import com.rg.headernotes.models.TaskModel
 import com.rg.headernotes.viewModels.TasksViewModel
 import com.rg.headernotes.util.ItemListener
 import com.rg.headernotes.util.RequestCodes
@@ -86,7 +87,8 @@ class TasksFragment : Fragment(), ItemListener {
             viewLifecycleOwner
         ) { _, result ->
             result.getParcelable(RequestCodes.newTask, TaskModel::class.java)?.let {
-                viewModel.newTask(it)
+                val outModel = it.copy(id = adapter.itemCount.toString())
+                viewModel.newTask(outModel)
             }
 
             binding.coordinatorLayout.visibility = View.VISIBLE
@@ -159,7 +161,8 @@ class TasksFragment : Fragment(), ItemListener {
             viewLifecycleOwner
         ) { _, result ->
             result.getParcelable(RequestCodes.newTask, TaskModel::class.java)?.let {
-                viewModel.newTask(it)
+                val outModel = it.copy(id = adapter.itemCount.toString())
+                viewModel.newTask(outModel)
             }
             result.getParcelable(RequestCodes.editTask, TaskModel::class.java)?.let {
                 viewModel.updateTask(it)

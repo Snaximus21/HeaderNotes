@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rg.headernotes.ui.tasks.TaskModel
+import com.rg.headernotes.models.TaskModel
 import com.rg.headernotes.util.UiState
 import com.rg.headertasks.repository.TasksRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

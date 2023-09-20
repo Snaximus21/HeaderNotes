@@ -5,7 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.rg.headernotes.dao.EmployersDao
 import com.rg.headernotes.models.EmployerModel
 import com.rg.headernotes.models.NoteModel
-import com.rg.headernotes.ui.tasks.TaskModel
+import com.rg.headernotes.models.TaskModel
 import com.rg.headernotes.util.FireStoreTables
 import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState
@@ -26,11 +26,12 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .addOnSuccessListener {
                     for (document in it) {
                         employers += EmployerModel(
-                            document.data["fullName"].toString(),
-                            document.data["job"].toString(),
-                            document.data["age"].toString(),
-                            document.data["notesCount"].toString(),
-                            document.data["tasksCount"].toString(),
+                            id = document.data["id"].toString(),
+                            fullName = document.data["fullName"].toString(),
+                            job = document.data["job"].toString(),
+                            age = document.data["age"].toString(),
+                            notesCount = document.data["notesCount"].toString(),
+                            tasksCount = document.data["tasksCount"].toString(),
                         )
                     }
                     result.invoke(UiState.Success(employers))
@@ -42,8 +43,7 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
     }
 
     override fun getEmployer(
-        employerID: String,
-        employerName: String,
+        employer: EmployerModel,
         result: (UiState<EmployerModel>) -> Unit
     ) {
         FirebaseAuth.getInstance().currentUser?.let { user ->
@@ -51,7 +51,7 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employerName)
+                .document(employer.id)
                 .get()
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(EmployerModel()))
@@ -64,7 +64,6 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
 
     override fun addEmployer(
         employer: EmployerModel,
-        employerName: String,
         result: (UiState<EmployerModel>) -> Unit
     ) {
         FirebaseAuth.getInstance().currentUser?.let { user ->
@@ -72,7 +71,7 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employerName)
+                .document(employer.id)
                 .set(employer)
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(employer))
@@ -93,7 +92,7 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                     .collection(FireStoreTables.USER)
                     .document(user.uid)
                     .collection(FireStoreTables.EMPLOYERS)
-                    .document(employer.fullName)
+                    .document(employer.id)
                     .set(employer)
                     .addOnSuccessListener {
                         result.invoke(UiState.Success(Strings.UPDATED))
@@ -106,7 +105,7 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
     }
 
     override fun deleteEmployer(
-        employerName: String,
+        employer: EmployerModel,
         result: (UiState<String>) -> Unit
     ) {
         FirebaseAuth.getInstance().currentUser?.let { user ->
@@ -114,7 +113,7 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employerName)
+                .document(employer.id)
                 .collection(FireStoreTables.NOTES)
                 .get()
                 .addOnSuccessListener { employers ->
@@ -123,9 +122,9 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                             .collection(FireStoreTables.USER)
                             .document(user.uid)
                             .collection(FireStoreTables.EMPLOYERS)
-                            .document(employerName)
+                            .document(employer.id)
                             .collection(FireStoreTables.NOTES)
-                            .document(employer.data["noteTitle"].toString())
+                            .document(employer.data["id"].toString())
                             .delete()
                     }
                 }
@@ -137,7 +136,30 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employerName)
+                .document(employer.id)
+                .collection(FireStoreTables.TASKS)
+                .get()
+                .addOnSuccessListener { employers ->
+                    for (employer in employers) {
+                        database
+                            .collection(FireStoreTables.USER)
+                            .document(user.uid)
+                            .collection(FireStoreTables.EMPLOYERS)
+                            .document(employer.id)
+                            .collection(FireStoreTables.TASKS)
+                            .document(employer.data["id"].toString())
+                            .delete()
+                    }
+                }
+                .addOnFailureListener {
+
+                }
+
+            database
+                .collection(FireStoreTables.USER)
+                .document(user.uid)
+                .collection(FireStoreTables.EMPLOYERS)
+                .document(employer.id)
                 .delete()
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(Strings.DELETED))
@@ -155,12 +177,13 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employer.fullName)
+                .document(employer.id)
                 .collection(FireStoreTables.NOTES)
                 .get()
                 .addOnSuccessListener {
                     for (document in it) {
                         notes += NoteModel(
+                            document.data["id"].toString(),
                             document.data["noteTitle"].toString(),
                             document.data["noteSubTitle"].toString(),
                             document.data["noteDateTime"].toString()
@@ -184,15 +207,16 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employer.fullName)
+                .document(employer.id)
                 .collection(FireStoreTables.NOTES)
-                .document(note.noteTitle)
+                .document(note.id)
                 .get()
                 .addOnSuccessListener {
                     result.invoke(
                         UiState.Success(
                             it.data?.let { data ->
                                 NoteModel(
+                                    data["id"].toString(),
                                     data["noteTitle"].toString(),
                                     data["noteSubTitle"].toString(),
                                     data["noteDateTime"].toString()
@@ -220,9 +244,9 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employer.fullName)
+                .document(employer.id)
                 .collection(FireStoreTables.NOTES)
-                .document(note.noteTitle)
+                .document(note.id)
                 .set(note)
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(note))
@@ -243,9 +267,9 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employer.fullName)
+                .document(employer.id)
                 .collection(FireStoreTables.NOTES)
-                .document(note.noteTitle)
+                .document(note.id)
                 .set(note)
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(Strings.UPDATED))
@@ -266,9 +290,9 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employer.fullName)
+                .document(employer.id)
                 .collection(FireStoreTables.NOTES)
-                .document(note.noteTitle)
+                .document(note.id)
                 .delete()
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(Strings.DELETED))
@@ -286,12 +310,13 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employer.fullName)
+                .document(employer.id)
                 .collection(FireStoreTables.TASKS)
                 .get()
                 .addOnSuccessListener {
                     for (document in it) {
                         tasks += TaskModel(
+                            document.data["id"].toString(),
                             document.data["taskName"].toString(),
                             document.data["taskNote"].toString(),
                             document.data["taskDate"].toString()
@@ -315,15 +340,16 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employer.fullName)
+                .document(employer.id)
                 .collection(FireStoreTables.TASKS)
-                .document(task.taskName)
+                .document(task.id)
                 .get()
                 .addOnSuccessListener {
                     result.invoke(
                         UiState.Success(
                             it.data?.let { data ->
                                 TaskModel(
+                                    data["id"].toString(),
                                     data["taskName"].toString(),
                                     data["taskNote"].toString(),
                                     data["taskDate"].toString()
@@ -351,9 +377,9 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employer.fullName)
+                .document(employer.id)
                 .collection(FireStoreTables.TASKS)
-                .document(task.taskName)
+                .document(task.id)
                 .set(task)
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(task))
@@ -374,9 +400,9 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employer.fullName)
+                .document(employer.id)
                 .collection(FireStoreTables.TASKS)
-                .document(task.taskName)
+                .document(task.id)
                 .set(task)
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(Strings.UPDATED))
@@ -397,9 +423,9 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.EMPLOYERS)
-                .document(employer.fullName)
+                .document(employer.id)
                 .collection(FireStoreTables.TASKS)
-                .document(task.taskName)
+                .document(task.id)
                 .delete()
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(Strings.DELETED))

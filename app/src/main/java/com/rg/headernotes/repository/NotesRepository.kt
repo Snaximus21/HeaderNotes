@@ -40,13 +40,14 @@ class NotesRepository @Inject constructor(private val database: FirebaseFirestor
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.NOTES)
-                .document(note.noteTitle)
+                .document(note.id)
                 .get()
                 .addOnSuccessListener {
                     result.invoke(
                         UiState.Success(
                             it.data?.let { data ->
                                 NoteModel(
+                                    data["id"].toString(),
                                     data["noteTitle"].toString(),
                                     data["noteSubTitle"].toString(),
                                     data["noteDateTime"].toString()
@@ -70,7 +71,7 @@ class NotesRepository @Inject constructor(private val database: FirebaseFirestor
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.NOTES)
-                .document(note.noteTitle)
+                .document(note.id)
                 .set(note)
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(note))
@@ -87,7 +88,7 @@ class NotesRepository @Inject constructor(private val database: FirebaseFirestor
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.NOTES)
-                .document(note.noteTitle)
+                .document(note.id)
                 .set(note)
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(Strings.UPDATED))
@@ -104,7 +105,7 @@ class NotesRepository @Inject constructor(private val database: FirebaseFirestor
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.NOTES)
-                .document(note.noteTitle)
+                .document(note.id)
                 .delete()
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(Strings.DELETED))

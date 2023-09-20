@@ -145,18 +145,6 @@ class EmployersFragment : Fragment(), ItemListener {
             }
         }
 
-        childFragmentManager.setFragmentResultListener(
-            "newEmployer",
-            viewLifecycleOwner
-        ) { requestKey, result ->
-            if (requestKey == "newEmployer") {
-                result.getParcelable("employerModel", EmployerModel::class.java)?.let {
-                    viewModel.newEmployer(it)
-                }
-            }
-            binding.coordinatorLayout.visibility = View.VISIBLE
-        }
-
         ItemTouchHelper(object : ItemTouchHelper.Callback() {
 
             override fun getMovementFlags(
@@ -222,7 +210,7 @@ class EmployersFragment : Fragment(), ItemListener {
                     .setTitle("Удаление сотрудника")
                     .setMessage("Вы действительно хотите удалить сотрудника без возможности восстановления?")
                     .setNegativeButton("Удалить") { dialog, which ->
-                        viewModel.deleteEmployer(adapter.getEmployer(viewHolder.adapterPosition).fullName)
+                        viewModel.deleteEmployer(adapter.getEmployer(viewHolder.adapterPosition))
                         adapter.deleteEmployer(viewHolder.adapterPosition)
 
                         dialog.dismiss()
@@ -238,11 +226,15 @@ class EmployersFragment : Fragment(), ItemListener {
         }).attachToRecyclerView(recyclerView)
 
         childFragmentManager.setFragmentResultListener(
-            RequestCodes.employerDetail,
+            RequestCodes.setEmployer,
             viewLifecycleOwner
         ) { requestKey, result ->
             result.getParcelable(RequestCodes.employerEdit, EmployerModel::class.java)?.let {
                 viewModel.updateEmployer(it)
+            }
+            result.getParcelable(RequestCodes.newEmployer, EmployerModel::class.java)?.let {
+                val outModel = it.copy(id = adapter.itemCount.toString())
+                viewModel.newEmployer(outModel)
             }
             binding.coordinatorLayout.visibility = View.VISIBLE
         }
@@ -253,7 +245,7 @@ class EmployersFragment : Fragment(), ItemListener {
             replace(R.id.fragmentContainerEmployers, EmployerDetailFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(
-                        RequestCodes.employerDetail,
+                        RequestCodes.employerEdit,
                         adapter.getEmployer(position)
                     )
                 }

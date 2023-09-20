@@ -50,7 +50,7 @@ class AddNoteFragment : Fragment() {
             binding.textViewDateTime.text = format.format(Date(it.noteDateTime.toLong()))
         }
 
-        isEmployer = arguments?.getBoolean(RequestCodes.employerDetail) == true
+        isEmployer = arguments?.getBoolean(RequestCodes.employerEdit) == true
 
         binding.buttonBack.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
@@ -73,11 +73,11 @@ class AddNoteFragment : Fragment() {
                     )
                     CoroutineScope(Dispatchers.Main).launch {
                         model?.let {
-                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.employerDetail else RequestCodes.setNote, Bundle().apply {
+                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.setEmployer else RequestCodes.setNote, Bundle().apply {
                                 putParcelable(RequestCodes.editNote, note)
                             })
                         } ?: run{
-                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.employerDetail else RequestCodes.setNote, Bundle().apply {
+                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.setEmployer else RequestCodes.setNote, Bundle().apply {
                                 putParcelable(RequestCodes.newNote, note)
                             })
                         }

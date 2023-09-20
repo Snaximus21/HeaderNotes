@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class EmployerModel(
+    val id: String = "",
     val fullName: String = "",
     val job: String = "",
     val age: String = "",
@@ -15,11 +16,13 @@ data class EmployerModel(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readString()!!
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(fullName)
         parcel.writeString(job)
         parcel.writeString(age)

@@ -50,6 +50,7 @@ object RequestCodes {
     const val setNote = "setNote"
     const val newNote = "newNote"
     const val editNote = "editNote"
-    const val employerDetail = "employerDetail"
+    const val setEmployer = "setEmployer"
+    const val newEmployer = "newEmployer"
     const val employerEdit = "employerEdit"
 }

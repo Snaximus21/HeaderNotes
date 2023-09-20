@@ -1,5 +1,6 @@
 package com.rg.headernotes.ui.addUser
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -51,6 +52,7 @@ class AddUserFragment : Fragment() {
                 }
             }
         }
+
         viewModel.addNewUser.observe(viewLifecycleOwner){
             if(it is UiState.Success){
                 navigate(GraphActions.addUserToMain)

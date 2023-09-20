@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rg.headernotes.databinding.ItemTaskBinding
-import com.rg.headernotes.ui.tasks.TaskModel
+import com.rg.headernotes.models.TaskModel
 import com.rg.headernotes.ui.tasks.TaskViewHolder
 import com.rg.headernotes.util.ItemListener
 

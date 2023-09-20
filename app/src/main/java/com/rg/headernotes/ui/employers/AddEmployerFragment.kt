@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAddEmployerBinding
 import com.rg.headernotes.models.EmployerModel
+import com.rg.headernotes.util.RequestCodes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -57,8 +58,8 @@ class AddEmployerFragment : Fragment() {
                         age = binding.editTextEmployerAge.text.toString()
                     )
                     CoroutineScope(Dispatchers.Main).launch {
-                        parentFragmentManager.setFragmentResult("newEmployer", Bundle().apply {
-                            putParcelable("employerModel", employer)
+                        parentFragmentManager.setFragmentResult(RequestCodes.setEmployer, Bundle().apply {
+                            putParcelable(RequestCodes.newEmployer, employer)
                         })
                         parentFragmentManager.popBackStack()
                     }

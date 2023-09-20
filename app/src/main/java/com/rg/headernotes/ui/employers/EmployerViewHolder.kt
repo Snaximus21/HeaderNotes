@@ -13,14 +13,18 @@ class EmployerViewHolder(private val binding: ItemEmployerBinding, private val i
         binding.textViewName.text = model.fullName
         binding.textViewJob.text = "Должность: ${model.job}"
         binding.textViewAge.text = "Возраст: ${model.age}"
-        if(model.notesCount.isElementNull())//Todo доделать
-            binding.textViewNotes.text = "Заметки: отсутствуют"
-        else
-            binding.textViewNotes.text = "Заметки: ${model.notesCount}"
-        if(model.tasksCount.isElementNull())//Todo доделать
-            binding.textViewTasks.text = "Задачи: отсутствуют"
-        else
-            binding.textViewTasks.text = "Задачи: ${model.tasksCount}"
+
+        binding.textViewNotes.text = when{
+            model.notesCount.isElementNull() ->  "Заметки: отсутствуют"
+            (model.notesCount.toInt() == 0) -> "Заметки: отсутствуют"
+            else -> "Заметки: ${model.notesCount}"
+        }
+
+        binding.textViewTasks.text = when{
+            model.tasksCount.isElementNull() ->  "Задачи: отсутствуют"
+            (model.tasksCount.toInt() == 0) -> "Задачи: отсутствуют"
+            else -> "Задачи: ${model.tasksCount}"
+        }
 
         binding.employerItem.setOnClickListener {
             itemListener?.onItemClickListener(adapterPosition)

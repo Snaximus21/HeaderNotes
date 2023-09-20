@@ -25,6 +25,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:singleSelection="true"
+        app:checkedButton="@id/buttonSystem"
         app:selectionRequired="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,24 +34,29 @@
         <Button
             android:id="@+id/buttonNight"
             style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:includeFontPadding="false"
             android:text="@string/theme_night"
             app:icon="@drawable/icon_night" />
 
         <Button
             android:id="@+id/buttonSystem"
             style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:layout_weight="1"
             android:text="@string/theme_system"
             app:icon="@drawable/icon_settings" />
 
         <Button
             android:id="@+id/buttonDay"
             style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/theme_day"
             app:icon="@drawable/icon_day" />
     </com.google.android.material.button.MaterialButtonToggleGroup>

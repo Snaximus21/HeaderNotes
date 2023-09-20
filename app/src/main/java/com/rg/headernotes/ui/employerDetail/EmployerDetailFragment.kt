@@ -14,17 +14,13 @@ import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentEmployerDetailBinding
 import com.rg.headernotes.models.EmployerModel
 import com.rg.headernotes.models.NoteModel
+import com.rg.headernotes.models.TaskModel
 import com.rg.headernotes.ui.notes.AddNoteFragment
 import com.rg.headernotes.ui.notes.NoteAdapter
 import com.rg.headernotes.ui.tasks.AddTaskFragment
-import com.rg.headernotes.ui.tasks.TaskModel
 import com.rg.headernotes.util.RequestCodes
-import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState
-import com.rg.headernotes.util.setAppTheme
 import com.rg.headernotes.viewModels.EmployersViewModel
-import com.rg.headernotes.viewModels.NotesViewModel
-import com.rg.headernotes.viewModels.TasksViewModel
 import com.rg.headertasks.ui.tasks.TaskAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -53,7 +49,7 @@ class EmployerDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.getParcelable(RequestCodes.employerDetail, EmployerModel::class.java)?.let {
+        arguments?.getParcelable(RequestCodes.employerEdit, EmployerModel::class.java)?.let {
             model = it
             binding.editTextName.setText(it.fullName)
             binding.editTextSpecies.setText(it.job)
@@ -83,7 +79,7 @@ class EmployerDetailFragment : Fragment() {
 
         binding.buttonBack.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
-                parentFragmentManager.setFragmentResult(RequestCodes.employerDetail, Bundle())
+                parentFragmentManager.setFragmentResult(RequestCodes.setEmployer, Bundle())
                 parentFragmentManager.popBackStack()
             }
         }
@@ -107,6 +103,7 @@ class EmployerDetailFragment : Fragment() {
 
                 else -> {
                     val employer = EmployerModel(
+                        id = model?.id.toString(),
                         fullName = binding.editTextName.text.toString(),
                         job = binding.editTextSpecies.text.toString(),
                         age = binding.editTextAge.text.toString(),
@@ -116,13 +113,13 @@ class EmployerDetailFragment : Fragment() {
                     CoroutineScope(Dispatchers.Main).launch {
                         model?.let {
                             parentFragmentManager.setFragmentResult(
-                                RequestCodes.employerDetail,
+                                RequestCodes.setEmployer,
                                 Bundle().apply {
                                     putParcelable(RequestCodes.employerEdit, employer)
                                 })
                         } ?: run {
                             parentFragmentManager.setFragmentResult(
-                                RequestCodes.employerDetail,
+                                RequestCodes.setEmployer,
                                 Bundle().apply {
                                     putParcelable(RequestCodes.employerEdit, employer)
                                 })
@@ -144,7 +141,7 @@ class EmployerDetailFragment : Fragment() {
                     }
                 }.apply {
                     arguments = Bundle().apply {
-                        putBoolean(RequestCodes.employerDetail, true)
+                        putBoolean(RequestCodes.employerEdit, true)
                     }
                 })
                 addToBackStack(null)
@@ -258,17 +255,19 @@ class EmployerDetailFragment : Fragment() {
             }
 
             childFragmentManager.setFragmentResultListener(
-                RequestCodes.employerDetail,
+                RequestCodes.setEmployer,
                 viewLifecycleOwner
             ) { requestKey, result ->
                 result.getParcelable(RequestCodes.newNote, NoteModel::class.java)?.let { note ->
-                    viewModel.newNote(employerModel ,note)
+                    val outModel = note.copy(id = adapterNotes.itemCount.toString())
+                    viewModel.newNote(employerModel ,outModel)
                 }
                 result.getParcelable(RequestCodes.editNote, NoteModel::class.java)?.let { note ->
                     viewModel.updateNote(employerModel, note)
                 }
                 result.getParcelable(RequestCodes.newTask, TaskModel::class.java)?.let { task ->
-                    viewModel.newTask(employerModel ,task)
+                    val outModel = task.copy(id = adapterTasks.itemCount.toString())
+                    viewModel.newTask(employerModel ,outModel)
                 }
                 result.getParcelable(RequestCodes.editTask, TaskModel::class.java)?.let { task ->
                     viewModel.updateTask(employerModel, task)

@@ -2,16 +2,15 @@ package com.rg.headernotes.dao
 
 import com.rg.headernotes.models.EmployerModel
 import com.rg.headernotes.models.NoteModel
-import com.rg.headernotes.models.UserModel
-import com.rg.headernotes.ui.tasks.TaskModel
+import com.rg.headernotes.models.TaskModel
 import com.rg.headernotes.util.UiState
 
 interface EmployersDao {
     fun getAllEmployers(result: (UiState<List<EmployerModel>>) -> Unit)
-    fun getEmployer(employerID: String, employerName: String, result: (UiState<EmployerModel>) -> Unit)
-    fun addEmployer(employer: EmployerModel, employerName: String, result: (UiState<EmployerModel>) -> Unit)
+    fun getEmployer(employer: EmployerModel, result: (UiState<EmployerModel>) -> Unit)
+    fun addEmployer(employer: EmployerModel,  result: (UiState<EmployerModel>) -> Unit)
     fun updateEmployer(employer: EmployerModel, result: (UiState<String>) -> Unit)
-    fun deleteEmployer(employerName: String, result: (UiState<String>) -> Unit)
+    fun deleteEmployer(employer: EmployerModel, result: (UiState<String>) -> Unit)
     fun getAllNotes(employer: EmployerModel, result: (UiState<List<NoteModel>>) -> Unit)
     fun getNote(employer: EmployerModel, note: NoteModel, result: (UiState<NoteModel>) -> Unit)
     fun addNote(employer: EmployerModel, note: NoteModel, result: (UiState<NoteModel>) -> Unit)

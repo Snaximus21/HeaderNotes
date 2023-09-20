@@ -26,4 +26,6 @@
     <color name="employer_title">#9DECA0</color>
     <color name="note">#317BB8</color>
     <color name="text">#1C1F1F</color>
+    <color name="button_checked">#1C1F1F</color>
+    <color name="button_unchecked">@color/search</color>
 </resources>

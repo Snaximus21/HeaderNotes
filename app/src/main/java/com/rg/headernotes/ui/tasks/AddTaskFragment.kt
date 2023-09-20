@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.rg.headernotes.R
 import com.rg.headernotes.databinding.FragmentAddTaskBinding
+import com.rg.headernotes.models.TaskModel
 import com.rg.headernotes.util.RequestCodes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -50,7 +51,7 @@ class AddTaskFragment : Fragment() {
             binding.buttonDate.text = format.format(Date(it.taskDate.toLong()))
         }
 
-        isEmployer = arguments?.getBoolean(RequestCodes.employerDetail) == true
+        isEmployer = arguments?.getBoolean(RequestCodes.employerEdit) == true
 
         binding.buttonBack.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
@@ -88,11 +89,11 @@ class AddTaskFragment : Fragment() {
                     )
                     CoroutineScope(Dispatchers.Main).launch {
                         model?.let {
-                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.employerDetail else RequestCodes.setTask, Bundle().apply {
+                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.setEmployer else RequestCodes.setTask, Bundle().apply {
                                 putParcelable(RequestCodes.editTask, task)
                             })
                         } ?: run{
-                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.employerDetail else RequestCodes.setTask, Bundle().apply {
+                            parentFragmentManager.setFragmentResult(if(isEmployer) RequestCodes.setEmployer else RequestCodes.setTask, Bundle().apply {
                                 putParcelable(RequestCodes.newTask, task)
                             })
                         }

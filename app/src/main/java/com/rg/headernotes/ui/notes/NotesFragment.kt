@@ -86,7 +86,8 @@ class NotesFragment : Fragment(), ItemListener {
             viewLifecycleOwner
         ) { requestKey, result ->
             result.getParcelable(RequestCodes.newNote, NoteModel::class.java)?.let {
-                viewModel.newNote(it)
+                val outModel = it.copy(id = adapter.itemCount.toString())
+                viewModel.newNote(outModel)
             }
             result.getParcelable(RequestCodes.editNote, NoteModel::class.java)?.let {
                 viewModel.updateNote(it)

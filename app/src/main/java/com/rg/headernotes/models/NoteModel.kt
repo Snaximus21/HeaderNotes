@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class NoteModel(
+    val id: String = "",
     val noteTitle: String = "",
     val noteSubTitle: String = "",
     val noteDateTime: String = ""
@@ -11,11 +12,13 @@ data class NoteModel(
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readString()!!
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(noteTitle)
         parcel.writeString(noteSubTitle)
         parcel.writeString(noteDateTime)

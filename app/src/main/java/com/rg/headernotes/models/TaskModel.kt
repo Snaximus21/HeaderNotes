@@ -1,9 +1,10 @@
-package com.rg.headernotes.ui.tasks
+package com.rg.headernotes.models
 
 import android.os.Parcel
 import android.os.Parcelable
 
 data class TaskModel (
+    val id: String = "",
     val taskName: String = "",
     val taskNote: String = "",
     val taskDate: String = ""
@@ -11,11 +12,13 @@ data class TaskModel (
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readString()!!
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(taskName)
         parcel.writeString(taskNote)
         parcel.writeString(taskDate)

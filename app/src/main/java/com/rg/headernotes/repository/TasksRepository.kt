@@ -2,7 +2,7 @@ package com.rg.headertasks.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.rg.headernotes.ui.tasks.TaskModel
+import com.rg.headernotes.models.TaskModel
 import com.rg.headernotes.util.FireStoreTables
 import com.rg.headernotes.util.Strings
 import com.rg.headernotes.util.UiState
@@ -21,6 +21,7 @@ class TasksRepository @Inject constructor(private val database: FirebaseFirestor
                 .addOnSuccessListener {
                     for (document in it) {
                         tasks += TaskModel(
+                            document.data["id"].toString(),
                             document.data["taskName"].toString(),
                             document.data["taskNote"].toString(),
                             document.data["taskDate"].toString()
@@ -40,13 +41,14 @@ class TasksRepository @Inject constructor(private val database: FirebaseFirestor
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.TASKS)
-                .document(task.taskName)
+                .document(task.id)
                 .get()
                 .addOnSuccessListener {
                     result.invoke(
                         UiState.Success(
                             it.data?.let { data ->
                                 TaskModel(
+                                    data["id"].toString(),
                                     data["taskName"].toString(),
                                     data["taskNote"].toString(),
                                     data["taskDate"].toString()
@@ -70,7 +72,7 @@ class TasksRepository @Inject constructor(private val database: FirebaseFirestor
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.TASKS)
-                .document(task.taskName)
+                .document(task.id)
                 .set(task)
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(task))
@@ -87,7 +89,7 @@ class TasksRepository @Inject constructor(private val database: FirebaseFirestor
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.TASKS)
-                .document(task.taskName)
+                .document(task.id)
                 .set(task)
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(Strings.UPDATED))
@@ -104,7 +106,7 @@ class TasksRepository @Inject constructor(private val database: FirebaseFirestor
                 .collection(FireStoreTables.USER)
                 .document(user.uid)
                 .collection(FireStoreTables.TASKS)
-                .document(task.taskName)
+                .document(task.id)
                 .delete()
                 .addOnSuccessListener {
                     result.invoke(UiState.Success(Strings.DELETED))

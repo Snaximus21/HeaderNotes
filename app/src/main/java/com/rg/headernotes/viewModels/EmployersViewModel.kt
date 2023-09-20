@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.rg.headernotes.repository.EmployersRepository
 import com.rg.headernotes.models.EmployerModel
 import com.rg.headernotes.models.NoteModel
-import com.rg.headernotes.ui.tasks.TaskModel
+import com.rg.headernotes.models.TaskModel
 import com.rg.headernotes.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -39,10 +39,10 @@ class EmployersViewModel @Inject constructor(private val repository: EmployersRe
 
     private val _delete = MutableLiveData<UiState<String>>()
     val delete: LiveData<UiState<String>> get() = _delete
-    fun deleteEmployer(employerName: String) {
+    fun deleteEmployer(employer: EmployerModel) {
         _delete.value = UiState.Loading
         viewModelScope.launch {
-            repository.deleteEmployer(employerName) {
+            repository.deleteEmployer(employer) {
                 _delete.value = it
             }
         }
@@ -52,7 +52,7 @@ class EmployersViewModel @Inject constructor(private val repository: EmployersRe
     val newEmployer: LiveData<UiState<EmployerModel>> get() = _newEmployer
     fun newEmployer(employer: EmployerModel) {
         _newEmployer.value = UiState.Loading
-        repository.addEmployer(employer, employer.fullName) {
+        repository.addEmployer(employer) {
             _newEmployer.value = it
         }
     }
