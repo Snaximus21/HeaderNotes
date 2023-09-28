@@ -75,7 +75,7 @@ class EmployersFragment : Fragment(), ItemListener {
             }
         )
 
-        binding.floatingActionButton.setOnClickListener {
+        binding.floatingActionButtonEmployers.setOnClickListener {
             childFragmentManager.beginTransaction().apply {
                 replace(R.id.fragmentContainerEmployers, AddEmployerFragment())
                 addToBackStack(null)

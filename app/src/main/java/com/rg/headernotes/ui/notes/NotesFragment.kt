@@ -72,7 +72,7 @@ class NotesFragment : Fragment(), ItemListener {
         recyclerView.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
-        binding.floatingActionButton.setOnClickListener {
+        binding.floatingActionButtonNotes.setOnClickListener {
             childFragmentManager.beginTransaction().apply {
                 replace(R.id.fragmentContainerNotes, AddNoteFragment())
                 addToBackStack(null)

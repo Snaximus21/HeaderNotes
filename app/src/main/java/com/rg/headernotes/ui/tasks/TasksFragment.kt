@@ -73,7 +73,7 @@ class TasksFragment : Fragment(), ItemListener {
         recyclerView.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
-        binding.floatingActionButton.setOnClickListener {
+        binding.floatingActionButtonTasks.setOnClickListener {
             childFragmentManager.beginTransaction().apply {
                 replace(R.id.fragmentContainerTasks, AddTaskFragment())
                 addToBackStack(null)
