@@ -71,17 +71,17 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     //Navigation
-    val navigationVersion = "2.7.2"
+    val navigationVersion = "2.7.3"
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:navigationVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
     implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation ("com.google.firebase:firebase-firestore:24.7.1")
-    implementation ("com.google.firebase:firebase-firestore-ktx:24.7.1")
+    implementation ("com.google.firebase:firebase-firestore:24.8.1")
+    implementation ("com.google.firebase:firebase-firestore-ktx:24.8.1")
     implementation ("com.google.firebase:firebase-analytics-ktx")
     implementation (platform("com.google.firebase:firebase-auth:21.1.0"))
     implementation ("com.google.firebase:firebase-auth")
