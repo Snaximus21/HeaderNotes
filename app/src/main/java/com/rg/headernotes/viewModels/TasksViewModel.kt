@@ -49,6 +49,9 @@ class TasksViewModel @Inject constructor(private val repository: TasksRepository
     private val _newTask = MutableLiveData<UiState<TaskModel>>()
     val newTask: LiveData<UiState<TaskModel>> get() = _newTask
     fun newTask(note: TaskModel) {
+        /**
+         * UiState лучше вынести из дата слоя и работать с ними только во фрагментах и ВМ
+         */
         _newTask.value = UiState.Loading
         repository.addTask(note) {
             _newTask.value = it

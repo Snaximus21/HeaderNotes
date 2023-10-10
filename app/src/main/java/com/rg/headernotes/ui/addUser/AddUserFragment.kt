@@ -54,6 +54,9 @@ class AddUserFragment : Fragment() {
         }
 
         viewModel.addNewUser.observe(viewLifecycleOwner){
+            /**
+             * А другие наследники UiState почему не обрабатываются?
+             */
             if(it is UiState.Success){
                 navigate(GraphActions.addUserToMain)
             }

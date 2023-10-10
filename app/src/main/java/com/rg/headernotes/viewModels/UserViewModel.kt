@@ -21,6 +21,14 @@ class UserViewModel @Inject constructor(private val repository: UserRepository):
         }
     }
 
+    /**
+     * Лучше оставить 2 лайвдаты: мутабельную и иммутабельную, типизированных UiState,
+     * ну а в обсерверах распаковывать.
+     * Иногда делают еще один набор лайвдат чтобы работать с one-time евентами, но на каждый тип
+     * делать лайвдату очень неудобно.
+     *
+     * Это касается всех вьюмоделей у тебя
+     */
     private val _deleteUser = MutableLiveData<UiState<String>>()
     val deleteUser: LiveData<UiState<String>> get() = _deleteUser
     fun deleteUser() {

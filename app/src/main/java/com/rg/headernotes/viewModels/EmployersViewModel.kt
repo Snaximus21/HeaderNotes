@@ -78,6 +78,9 @@ class EmployersViewModel @Inject constructor(private val repository: EmployersRe
         }
     }
 
+    /**
+     * Не используется
+     */
     private val _deleteNote = MutableLiveData<UiState<String>>()
     val deleteNote: LiveData<UiState<String>> get() = _deleteNote
     fun deleteNote(employer: EmployerModel, note: NoteModel) {
@@ -119,6 +122,9 @@ class EmployersViewModel @Inject constructor(private val repository: EmployersRe
         }
     }
 
+    /**
+     * не используется
+     */
     private val _deleteTask = MutableLiveData<UiState<String>>()
     val deleteTask: LiveData<UiState<String>> get() = _deleteTask
     fun deleteTask(employer: EmployerModel, note: TaskModel) {

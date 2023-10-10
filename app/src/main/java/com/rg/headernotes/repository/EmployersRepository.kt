@@ -87,6 +87,9 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
         result: (UiState<String>) -> Unit
     ) {
         FirebaseAuth.getInstance().currentUser?.let { user ->
+            /**
+             * А есть же уже user тут, опечатка?
+             */
             FirebaseAuth.getInstance().currentUser?.let { user ->
                 database
                     .collection(FireStoreTables.USER)
@@ -117,6 +120,9 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                 .collection(FireStoreTables.NOTES)
                 .get()
                 .addOnSuccessListener { employers ->
+                    /**
+                     * Подсказывает IDE что шадовинг у тебя тут переменной происходит
+                     */
                     for (employer in employers) {
                         database
                             .collection(FireStoreTables.USER)
@@ -152,7 +158,9 @@ class EmployersRepository @Inject constructor(private val database: FirebaseFire
                     }
                 }
                 .addOnFailureListener {
-
+                    /**
+                     * Здесь не нужно обрабатывать?
+                     */
                 }
 
             database

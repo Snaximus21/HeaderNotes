@@ -38,6 +38,10 @@ class StartFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * работу с префами лучше вынести в какой то отдельный класс, все таки не совсем это обязанность
+     * фрагмента работать с хранилищем напрямую
+     */
     private fun viewPagerStartFinish(): Boolean {
         val sharedPref = requireActivity().getSharedPreferences("viewPager2Start", Context.MODE_PRIVATE)
         return sharedPref.getBoolean("Finished", false)

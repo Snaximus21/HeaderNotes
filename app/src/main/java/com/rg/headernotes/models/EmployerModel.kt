@@ -3,6 +3,12 @@ package com.rg.headernotes.models
 import android.os.Parcel
 import android.os.Parcelable
 
+/**
+ * Справедливо почти для всех классов в этом пакете:
+ *
+ * Очень много бойлерплейта из за parcelable, имхо тут можно вообще взять сериализацию,
+ * тут никакого IPC нет, сериализации штука быстрая, ну либо взять какой нибудь parcelize плагин
+ */
 data class EmployerModel(
     val id: String = "",
     val fullName: String = "",
